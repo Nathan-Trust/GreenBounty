@@ -8,15 +8,25 @@ import SingleProjectPage from "@/app/(dashboard)/projects/[projectId]/page";
 import ProjectsPage from "@/app/(dashboard)/projects/page";
 import SettingsPage from "@/app/(dashboard)/settings/page";
 import SignInPage from "@/app/auth/sign-in/page";
-import Home from "@/app/page";
+import Home from "@/app/(landing-page)/page";
 import ErrorPage from "@/error/page";
 import { Green_Bounty_Routes } from "@/store/route";
 import { createBrowserRouter } from "react-router-dom";
+import LandingPageLayout from "@/app/(landing-page)/layout";
+import AboutPage from "@/app/(landing-page)/about/page";
 
 export const router = createBrowserRouter([
   {
-    path: Green_Bounty_Routes.home,
-    element: <Home/>
+    element: <LandingPageLayout />,
+    children: [
+      {
+        path: Green_Bounty_Routes.home,
+        element: <Home />,
+      }, {
+        path: Green_Bounty_Routes.about,
+        element: <AboutPage/>
+      }
+    ]
   },
   {
     path: Green_Bounty_Routes.signIn,

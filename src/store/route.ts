@@ -3,6 +3,7 @@ import { ProjectTabItems } from "./single-project";
 export class Green_Bounty_Routes {
   //landing-page
   static readonly home = "/";
+  static readonly about = "/about"
   // Auth
   static readonly signIn = "/auth/sign-in";
 

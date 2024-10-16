@@ -35,7 +35,7 @@ const CommitmentSection = () => {
               a circular economy and reduces waste through innovative recycling
               solutions.
             </motion.p>
-            <Button className="bg-[#2196F3] w-full md:w-fit mt-3">
+            <Button className="w-full md:w-fit mt-3">
               Join GreenBounty Now
             </Button>
           </div>

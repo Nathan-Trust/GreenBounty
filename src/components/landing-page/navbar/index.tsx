@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu } from "lucide-react"; // Importing the Lucide React Menu icon
+import { Link, useLocation } from "react-router-dom"; // Importing Link and useLocation from react-router-dom
 import { Button } from "@/components/ui/button";
+import greenbountyLogo from "../../../assets/landing-page/greenbountylogo.png";
 
 // Dummy menu data
 const menuData = [
@@ -13,12 +15,13 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
   const menuRef = useRef<HTMLUListElement | null>(null); // Specify type of the ref
+  const location = useLocation(); // Use useLocation to get the current URL
 
   // Scroll listener to change navbar style
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      setScrolled(offset > 1); // Change the value to match the height of your hero section
+      setScrolled(offset > 100); // Change the value to match the height of your hero section
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -51,19 +54,20 @@ const Navbar = () => {
     <nav
       className={`${
         scrolled
-          ? "fixed top-0 left-0 w-full  shadow-lg z-50  bg-white " // Navbar after scrolling
-          : "absolute top-4 w-full  bg-transparent z-50"
-      } transition-all duration-300 ease-in-out p-4 h-fit  md:px-4 md:py-2 `}
+          ? "fixed top-0 left-0 w-full  shadow-lg z-50 p-4   bg-white " // Navbar after scrolling
+          : "absolute md:top-4 w-full  bg-transparent z-50 p-4 md:p-4 md:py-2 lg:px-0 "
+      } transition-all duration-300 ease-in-out  h-fit `}
     >
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between screen-max-width mx-auto items-center">
         {/* Logo or Brand Name */}
-        {/* <div className="text-lg font-bold text-white md:text-black">
+        <div className="text-lg flex flex-col items-center font-bold text-black">
           <img
-            src="./drowsy-guard-logo.png"
+            src={greenbountyLogo}
             alt=""
-            className={`${scrolled ? "h-10 " : "h-10 lg:h-full"}`}
+            className={`${scrolled ? "h-8 " : "w-14 lg:h-auto object-contain"}`}
           />
-        </div> */}
+          <p>GreenBounty</p>
+        </div>
 
         {/* Menu Icon for smaller screens */}
         <div className="md:hidden menu-icon">
@@ -75,20 +79,26 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Menu */}
-        <ul className={`hidden md:flex space-x-8 items-center `}>
-          {menuData.map((item, index) => (
-            <li key={index}>
-              <a
-                href={item.url}
-                className="font-semibold text-lg hover:text-gray-500"
-              >
-                {item.title}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden md:flex items-center gap-6  ">
+          <ul className={`flex space-x-8 items-center `}>
+            {menuData.map((item, index) => (
+              <li key={index}>
+                <Link
+                  to={item.url}
+                  className={`font-semibold text-lg group hover:text-gray-500 relative ${
+                    location.pathname === item.url
+                      ? "text-green-500"
+                      : "text-black"
+                  }`}
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        <Button className="bg-[#2196F3]">Start Recycling </Button>
+          <Button className=" ">Start Recycling</Button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -101,12 +111,12 @@ const Navbar = () => {
         >
           {menuData.map((item, index) => (
             <li key={index}>
-              <a
-                href={item.url}
+              <Link
+                to={item.url}
                 className="font-semibold text-lg hover:text-gray-500"
               >
                 {item.title}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
