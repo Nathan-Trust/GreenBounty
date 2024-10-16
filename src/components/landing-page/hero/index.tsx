@@ -11,8 +11,8 @@ const fadeInVariants = {
 
 const HeroSection = () => {
   return (
-    <div className="w-full flex flex-col bg-center bg-cover screen-max-width pb-20">
-      <div className="flex flex-col-reverse md:flex-row justify-between items-center mt-16 z-20">
+    <div className="w-full flex flex-col screen-max-width pb-20">
+      <div className="flex flex-col-reverse md:flex-row justify-between items-center z-20">
         <div className="px-4 lg:px-0">
           <motion.h2
             className="text-4xl lg:text-5xl font-semibold"

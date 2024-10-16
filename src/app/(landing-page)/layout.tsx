@@ -4,9 +4,13 @@ import { Outlet } from "react-router-dom";
 
 const LandingPageLayout = () => {
   return (
-    <div className=" min-h-screen border border-red-500 flex justify-between flex-col">
+    <div className=" min-h-screen ">
       <Navbar />
-      <Outlet/>
+      <div className="w-full screen-max-width  h-fit ">
+        <div className=" mt-28  z-20">
+          <Outlet />
+        </div>
+      </div>
       <LandingPageFooter />
     </div>
   );
