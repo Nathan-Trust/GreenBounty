@@ -4,7 +4,7 @@ import HomeClient from "./client";
 
 const Home = () => {
   // SEO MANAGEMENT
-  useTitleUpdater({ [Green_Bounty_Routes.home]: "Drowsy Guard" });
+  useTitleUpdater({ [Green_Bounty_Routes.home]: "GreenBounty" });
   useMetaTagUpdater({
     [Green_Bounty_Routes.home]: [
       { name: "description", content: "This is the login page description." },

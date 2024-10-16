@@ -1,4 +1,4 @@
-import Navbar from "../navbar";
+// import Navbar from "../navbar";
 import heroImg from "../../../assets/landing-page/Image.png";
 import { Button } from "@/components/ui/button";
 import GreenBountyRates from "../rating";
@@ -12,9 +12,6 @@ const fadeInVariants = {
 const HeroSection = () => {
   return (
     <div className="w-full flex flex-col bg-center bg-cover screen-max-width pb-20">
-      {/* Navbar */}
-      <Navbar />
-
       <div className="flex flex-col-reverse md:flex-row justify-between items-center mt-16 z-20">
         <div className="px-4 lg:px-0">
           <motion.h2
@@ -39,7 +36,7 @@ const HeroSection = () => {
             sustainable brands.
           </motion.p>
           <div className="mt-2.5 flex flex-col items-center md:items-start w-full">
-            <Button className="bg-[#2196F3] w-full md:w-fit">
+            <Button className="w-full md:w-fit">
               Join Green Bounty
             </Button>
           </div>
