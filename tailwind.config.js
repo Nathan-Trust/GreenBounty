@@ -15,7 +15,7 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
-        "mini-md":"426px"
+        "mini-md": "426px",
       },
     },
     extend: {
@@ -59,6 +59,13 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      fontFamily: {
+        Inter: ["Inter", "system-ui"],
+        Nunito: ["Nunito Sans", "system-ui"],
+        BricolageGrotesque: ["Bricolage Grotesque", "sans-serif"],
+        Outfit: ["Outfit", "sans-serif"],
+        Poppins: ["Poppins", "sans-serif"],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -81,10 +88,15 @@ module.exports = {
             height: "0",
           },
         },
+          "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
     },
   },

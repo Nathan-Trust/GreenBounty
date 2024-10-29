@@ -4,11 +4,10 @@ export const APIs = {
   // Authentication
   login: {
     method: "POST" as const,
-    url: `/signin`,
+    url: `/auth/login`,
   } as ApiRouteType,
 
   register: {
-    method: "POST" as const,
     url: `/auth/register`,
   } as ApiRouteType,
 

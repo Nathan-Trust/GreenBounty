@@ -1,7 +1,7 @@
 import { MyContext } from "@/context";
 import { useContext } from "react";
-import { formatFullName, getInitials } from "../text";
-import { User } from "@/services/user";
+// import { formatFullName, getInitials } from "../text";
+// import { User } from "@/services/user";
 
 export class Constants {
     // static isDev = process.env.NEXT_PUBLIC_ENV === "dev";
@@ -23,8 +23,8 @@ export class Constants {
  * @param user - The user object containing first and last names.
  * @returns An object containing initials and full name.
  */
-export const getUserDetails = (user: User) => {
-  const initials = user ? getInitials(user?.firstname, user?.lastname) : "";
-  const fullName = user ? formatFullName(user?.firstname, user?.lastname) : "";
-  return { initials, fullName };
-};
+// export const getUserDetails = (user: User) => {
+//   const initials = user ? getInitials(user?.firstname, user?.lastname) : "";
+//   const fullName = user ? formatFullName(user?.firstname, user?.lastname) : "";
+//   return { initials, fullName };
+// };
