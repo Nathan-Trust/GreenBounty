@@ -1,6 +1,7 @@
 import { QueryKeys } from "@/models/query";
 import { ApiError } from "@/models/serviceRequest";
-import { AuthService, User } from "@/services/auth";
+import { AuthService } from "@/services/auth";
+import { User } from "@/services/user";
 import { Green_Bounty_Routes } from "@/store/route";
 import { errorToast, successToast } from "@/utils/toast";
 import {
@@ -39,6 +40,8 @@ export const useLogin = (): UseMutationResult<
           (error as ApiError)?.response?.data?.message ??
           "An error occurred while logging in. Please try again.",
       });
+              throw error;
+
     },
   });
 };

@@ -8,23 +8,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 export const FormFieldComponent = ({
   name,
   label,
   type = "text",
   showPasswordStrength = false, // New prop to control password strength visibility
-  focusedField,
-  onFocus,
+  toggleVisibility,
   onBlur,
   className,
 }: {
   name: string;
   label: string;
   type?: string;
-  showPasswordStrength?: boolean; // New prop to control password strength visibility
-  focusedField: string | null;
-  onFocus: (fieldName: string) => void;
+  showPasswordStrength?: boolean;
+  toggleVisibility: (field: "password") => void;
   onBlur: () => void;
   className?: string;
 }) => {
@@ -51,35 +50,35 @@ export const FormFieldComponent = ({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className={`relative ${className}`}>
+        <FormItem className={` ${className}`}>
+          <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input
-              placeholder=" "
-              {...field}
-              type={type}
-              className="peer placeholder-transparent bg-lightGray_two h-[45px]  focus-visible:ring-0  text-xs font-medium focus-visible:ring-offset-0 focus:bg-lightGray_two hover:bg-lightGray_two border-none outline-none  "
-              onFocus={() => onFocus(name)}
-              onBlur={onBlur}
-            />
+            <div className="relative">
+              <Input
+                placeholder=" "
+                {...field}
+                type={type}
+                className="w-full"
+                onBlur={onBlur}
+              />
+              <button
+                type="button"
+                onClick={() => toggleVisibility("password")}
+                className="absolute inset-y-0 right-2 flex items-center"
+              >
+                {type == "text" ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </FormControl>
-          <FormLabel
-            className={`absolute left-2 transition-all text-[#9f9fa0] text-xs duration-200 ${
-              focusedField === name || field.value
-                ? "-top-2 left-2"
-                : "top-1 left-3"
-            }`}
-          >
-            {label}
-          </FormLabel>
           <FormMessage className="text-sm font-medium" />
           {label === "Password" && showPasswordStrength && (
-            <div className="mt-3 flex flex-col  items-center space-x-1">
+            <div className="mt-5">
               <div className="flex w-full gap-2">
                 {["a-z", "A-Z", "0-9", "!@#$%^&*()"].map((_, index) => (
                   <div
                     key={index}
                     className={`h-1 w-[25%] rounded-full ${
-                      passwordStrength > index ? "bg-success" : "bg-gray-300"
+                      passwordStrength > index ? "bg-primary" : "bg-gray-300"
                     }`}
                   />
                 ))}

@@ -2,7 +2,7 @@ export type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 // Modify the ApiRouteType to support dynamic URL generation
 export interface ApiRouteType {
-  method: Method;
+  method?: Method;
   url: string | ((params: Record<string, string | number>) => string);
 }
 
@@ -10,7 +10,9 @@ export interface ApiRouteType {
 export interface ApiError {
   response?: {
     data?: {
-      message?: string; // or whatever structure your API returns
+      message?: string;
+      error?: string;
+      statusCode?: number;
     };
   };
 }

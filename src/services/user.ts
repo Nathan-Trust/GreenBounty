@@ -3,18 +3,20 @@ import { APIs } from "./API";
 
 export type User = {
   _id: string;
-  unique_id: string;
-  firstname: string;
-  lastname: string;
+  name: string;
   email: string;
   emailVerified: boolean;
-  role: string;
-  workspace: string;
+  role: "USER" | "ADMIN" | "MODERATOR"; // Assuming possible roles
+  basket: "STANDARD" | "PREMIUM" | "BASIC"; // Assuming possible basket types
+  referralCode: string;
+  referredBy?: string;
+  totalReferrals: number;
+  wallet: number;
   isGoogleAuth: boolean;
   isLoggedOut: boolean;
   createdAt: string;
   updatedAt: string;
-  __v: 0;
+  __v: number;
   accessToken: string;
 };
 

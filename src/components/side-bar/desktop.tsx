@@ -13,14 +13,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { AlignJustify, LogOut } from "lucide-react";
 import { SidebarButton } from "./shared/button";
 import { User } from "./mobile";
-import { truncateText } from "@/utils/text";
+// import { truncateText } from "@/utils/text";
 
 interface SidebarDesktopProps {
   sidebarItems: SidebarItems;
   handleLogout: () => void;
   user: User | null;
-  initials: string;
-  fullName: string;
+  // initials: string;
+  // fullName: string;
 }
 
 export function SidebarDesktop(props: Readonly<SidebarDesktopProps>) {
@@ -33,7 +33,6 @@ export function SidebarDesktop(props: Readonly<SidebarDesktopProps>) {
   useEffect(() => {
     setValue("");
   }, [location.pathname]);
-
 
   function isActivePath(currentPath: string, linkPath: string): boolean {
     if (currentPath === linkPath) {
@@ -268,15 +267,15 @@ export function SidebarDesktop(props: Readonly<SidebarDesktopProps>) {
                     <Avatar className="h-8 w-8 mr-1">
                       <AvatarImage src="https://github.com/max-programming.png" />
                       <AvatarFallback className="text-xs ">
-                        {props.initials}
+                        {/* {props.initials} */}
                       </AvatarFallback>
                     </Avatar>
                     <div className=" ml-1">
                       <p className="text-xs">
-                        {truncateText(props.fullName, 20)}
+                        {/* {truncateText(props.fullName, 20)} */}
                       </p>
                       <p className="text-[10px]">
-                        {truncateText(props.user?.email ?? "", 20)}
+                        {/* {truncateText(props.user?.email ?? "", 20)} */}
                       </p>
                     </div>
                   </div>

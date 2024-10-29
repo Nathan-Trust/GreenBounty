@@ -13,7 +13,7 @@ import {
 import { useCallback, useState } from "react";
 import { useProviderContext } from "@/utils/constants";
 import { SidebarMobileButton } from "./shared/button";
-import { truncateText } from "@/utils/text";
+// import { truncateText } from "@/utils/text";
 import { SidebarItems, Theme } from "@/models/shared";
 
 export interface User {
@@ -28,8 +28,8 @@ interface SidebarMobileProps {
   sidebarItems: SidebarItems;
   handleLogout: () => void;
   user: User | null;
-  initials: string;
-  fullName: string;
+  // initials: string;
+  // fullName: string;
 }
 
 export function SidebarMobile(props: Readonly<SidebarMobileProps>) {
@@ -168,11 +168,11 @@ export function SidebarMobile(props: Readonly<SidebarMobileProps>) {
                       <div className="flex  items-center gap-4">
                         <Avatar className="h-10 w-10">
                           <AvatarImage src="https://github.com/max-programming.png" />
-                          <AvatarFallback>{props.initials}</AvatarFallback>
+                          <AvatarFallback></AvatarFallback>
                         </Avatar>
                         <span className="text-xs">
                           {" "}
-                          {truncateText(props.fullName, 20)}
+                          {/* {truncateText(props.fullName, 20)} */}
                         </span>
                       </div>
                     </div>
