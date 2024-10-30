@@ -35,7 +35,7 @@ const VerifyOtpPage = () => {
 
   // Access email from query parameters using useSearchParams
   const email = searchParams.get("email");
-  const { mutate: verifyEmailOtp, isSuccess } = useVerifyEmailOtp(); // Get the mutate function from the custom hook
+  const { mutate: verifyEmailOtp, isSuccess , isPending } = useVerifyEmailOtp(); // Get the mutate function from the custom hook
   // Access email from state passed during navigation
   const fromSignUp = location.state?.fromSignUp;
 
@@ -49,7 +49,9 @@ const VerifyOtpPage = () => {
     verifyEmailOtp(data);
     if (isSuccess) {
       // Navigate to the congratulations page if verification is successful
-      navigate(Green_Bounty_Routes.congratulations);
+      navigate(Green_Bounty_Routes.congratulations, {
+        state: { fromVerifyOtp: true },
+      });
     }
   };
 
@@ -58,12 +60,12 @@ const VerifyOtpPage = () => {
       <CardHeader className="text-center pt-2">
         <CardTitle className="text-3xl">Email Verification</CardTitle>
         <CardDescription>
-          To continue with your sign up process, please input the 6-digit code
+          To continue with your sign up process, please input the 5-digit code
           sent to you {maskEmail(email)}. for verification
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <OtpForm onSubmit={onSubmit} email={email ?? ""} />
+        <OtpForm onSubmit={onSubmit} email={email ?? ""} isPending={isPending} />
       </CardContent>
       <CardFooter className=" w-full ">
         <p className="text-sm text-center mx-auto">

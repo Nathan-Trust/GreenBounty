@@ -3,6 +3,8 @@ import heroImg from "../../../assets/landing-page/Image.png";
 import { Button } from "@/components/ui/button";
 import GreenBountyRates from "../rating";
 import { motion } from "framer-motion";
+import { Green_Bounty_Routes } from "@/store/route";
+import { useNavigate } from "react-router-dom";
 
 const fadeInVariants = {
   hidden: { opacity: 0, x: -20 }, // Initial state
@@ -10,6 +12,8 @@ const fadeInVariants = {
 };
 
 const HeroSection = () => {
+    const navigate = useNavigate();
+
   return (
     <div className="w-full flex flex-col screen-max-width pb-20">
       <div className="flex flex-col-reverse md:flex-row justify-between items-center z-20">
@@ -31,12 +35,12 @@ const HeroSection = () => {
             variants={fadeInVariants}
             transition={{ duration: 0.5, delay: 0.5 }} // Delayed for staggered effect
           >
-            GreenBounty is a waste-to-reward app that incentivizes recycling.
+            GreenBounty is a waste-to-reward web app that incentivizes recycling.
             Earn points for every item recycled and redeem rewards from
             sustainable brands.
           </motion.p>
           <div className="mt-2.5 flex flex-col items-center md:items-start w-full">
-            <Button className="w-full md:w-fit">
+            <Button className="w-full md:w-fit" onClick={()=> navigate(Green_Bounty_Routes.signUp)}>
               Join Green Bounty
             </Button>
           </div>

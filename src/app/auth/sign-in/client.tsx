@@ -85,6 +85,12 @@ const SignUpForm = () => {
       if (rememberMe) {
         rememberUserDetails(dataWithoutTerms);
       }
+
+      if (res.role == null) {
+        navigate(Green_Bounty_Routes.chooseBasket, {
+          state: { fromSignIn: true },
+        });
+      }
     } catch (error) {
       const errorMessage = (error as ApiError)?.response?.data?.message;
       if (errorMessage === "kindly verify your email to login") {
@@ -195,7 +201,7 @@ const SignUpForm = () => {
                 </Link>
               </div>
             </div>
-            <Button className="w-full">
+            <Button className="w-full" disabled={isPending}>
               {isPending ? <LoadingDots /> : "Login"}
             </Button>
           </form>
@@ -203,7 +209,7 @@ const SignUpForm = () => {
       </CardContent>
       <CardFooter className="w-full ">
         <p className="text-sm text-center mx-auto">
-          Already have an account?{" "}
+          Don&apos;t have an account ?
           <Link
             to={Green_Bounty_Routes.signUp}
             className="text-primary inline ml-1.5"

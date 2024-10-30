@@ -21,6 +21,7 @@ import VerifyOtpPage from "@/app/auth/verify-otp/page";
 import CongratulationsPage from "@/app/auth/congratulations/page";
 import ForgotPasswordPage from "@/app/auth/forgot-password/page";
 import ResetPasswordForm from "@/app/auth/reset-password/page";
+import ChooseBasketForm from "@/app/auth/choose-basket/page";
 
 export const router = createBrowserRouter([
   {
@@ -66,9 +67,13 @@ export const router = createBrowserRouter([
       },
       {
         path: Green_Bounty_Routes.resetPassword(),
-        element: <ResetPasswordForm/>
-      }
+        element: <ResetPasswordForm />,
+      },
     ],
+  },
+  {
+    path: Green_Bounty_Routes.chooseBasket,
+    element: <ChooseBasketForm />,
   },
   {
     element: <Layout />,
