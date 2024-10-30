@@ -34,7 +34,7 @@ const ForgotPasswordPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState(""); // Track the email for OTP form
-  const { mutate: verifyEmailOtp, isSuccess } = useVerifyEmailOtp(); // Get the mutate function from the custom hook
+  const { mutate: verifyEmailOtp, isSuccess, isPending } = useVerifyEmailOtp(); // Get the mutate function from the custom hook
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),
@@ -137,7 +137,7 @@ const ForgotPasswordPage = () => {
           </Form>
         ) : (
           // Render the OtpForm and pass the email as a prop
-          <OtpForm onSubmit={onOtpSubmit} email={email} />
+          <OtpForm onSubmit={onOtpSubmit} email={email} isPending={isPending} />
         )}
       </CardContent>
     </Card>

@@ -27,7 +27,7 @@ const LandingPageFooter = () => {
   return (
     <footer className="border-t py-3">
       <div className="screen-max-width mx-auto px-4 flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
-        <h2 className="text-3xl font-bold text-gray-800">GreenBounty</h2>
+        <h2 className="text-xl font-bold text-gray-800">GreenBounty</h2>
 
         <p className="text-sm text-gray-500">© 2024 All rights reserved</p>
 

@@ -8,8 +8,22 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import { Green_Bounty_Routes } from "@/store/route";
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const CongratulationsPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fromVerifyOtp = location.state?.fromVerifyOtp;
+
+  useEffect(() => {
+    if (!fromVerifyOtp) {
+      navigate(Green_Bounty_Routes.signIn, { replace: true });
+    }
+  }, [fromVerifyOtp, navigate]);
+
   const defaultOptions = {
     loop: true,
     autoplay: true,

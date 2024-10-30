@@ -9,8 +9,6 @@ import {
 } from "@/schema/auth";
 import { User } from "./user";
 
-// Define the shape of the User object
-
 export class AuthService {
   // Login
   static async login(email: string, password: string): Promise<User> {
@@ -35,10 +33,11 @@ export class AuthService {
       throw error;
     }
   }
-
+  // send otp to email
   public static async verifyEmail(email: string): Promise<void> {
     await axiosInstance.post("auth/verify-email/otp", { email });
   }
+  // verify email otp
   public static async verifyEmailOtp(
     data: VerifyOtpFormSchemaType
   ): Promise<{ success: boolean; message: string }> {
@@ -58,15 +57,17 @@ export class AuthService {
       );
       return response.data; // Return the response data
     } catch (error) {
-      logger("Email verification failed:", error); // Log the error
-      throw error; // Rethrow the error for handling elsewhere
+      logger("Email verification failed:", error);
+      throw error;
     }
   }
+  // forgot password
   public static async forgotPassword(
     data: ForgotPasswordSchemaType
   ): Promise<void> {
     await axiosInstance.post("auth/forgot-password", data);
   }
+  // reset password
   public static async resetPassword(
     data: ChangePasswordSchemaType
   ): Promise<{ success: boolean; message: string }> {
@@ -74,6 +75,14 @@ export class AuthService {
       "auth/forgot-password/update",
       data
     );
-    return response.data; // Return the data directly
+    return response.data;
+  }
+
+  // choose basket
+  public static async chooseBasket(
+    data: "Standard" | "Premium"
+  ): Promise<{ success: boolean; data: User; message: string | null }> {
+    const response = await axiosInstance.patch("/user/basket", { plan: data });
+    return response.data;
   }
 }

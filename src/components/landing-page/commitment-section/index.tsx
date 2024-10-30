@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import commitmentImg from "../../../assets/landing-page/commitment.png";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { Green_Bounty_Routes } from "@/store/route";
 
 // Define fade-in animation variants
 const fadeInVariants = {
@@ -9,12 +11,13 @@ const fadeInVariants = {
 };
 
 const CommitmentSection = () => {
+  const navigate = useNavigate()
   return (
     <div className="h-fit bg-[#d3d3d3] w-full">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between screen-max-width px-4 py-5 lg:px-0">
         <img src={commitmentImg} alt="commitment" className="md:w-[40%]" />
         <div className="lg:w-1/2 flex items-center justify-center">
-          <div className="lg:w-[390px]">
+          <div className="lg:w-[430px]">
             <motion.h2
               className="text-4xl lg:text-5xl font-semibold"
               initial="hidden"
@@ -35,7 +38,7 @@ const CommitmentSection = () => {
               a circular economy and reduces waste through innovative recycling
               solutions.
             </motion.p>
-            <Button className="w-full md:w-fit mt-3">
+            <Button className="w-full md:w-fit mt-3" onClick={() => navigate(Green_Bounty_Routes.signUp)}>
               Join GreenBounty Now
             </Button>
           </div>

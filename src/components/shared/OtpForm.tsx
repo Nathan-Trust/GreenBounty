@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { VerifyOtpFormSchema, VerifyOtpFormSchemaType } from "@/schema/auth";
+import LoadingDots from "./LoadingDots";
 
 export const OtpFormSchema = z.object({
   code: z.string().length(5, "Code must be 5 characters long"),
@@ -24,9 +25,10 @@ export const OtpFormSchema = z.object({
 type OtpFormProps = {
   onSubmit: (data: VerifyOtpFormSchemaType) => void;
   email?: string; // Optional email prop for masking
+  isPending: boolean;
 };
 
-const OtpForm = ({ onSubmit, email }: OtpFormProps) => {
+const OtpForm = ({ onSubmit, email, isPending }: OtpFormProps) => {
   const form = useForm<z.infer<typeof VerifyOtpFormSchema>>({
     resolver: zodResolver(VerifyOtpFormSchema),
     defaultValues: {
@@ -63,8 +65,8 @@ const OtpForm = ({ onSubmit, email }: OtpFormProps) => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Continue
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? <LoadingDots /> : "Continue"}
         </Button>
       </form>
     </Form>

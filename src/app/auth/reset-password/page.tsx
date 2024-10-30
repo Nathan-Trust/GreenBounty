@@ -24,15 +24,16 @@ import { Button } from "@/components/ui/button";
 import useResetPassword from "@/hooks/auth/useResetPassword";
 import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { Green_Bounty_Routes } from "@/store/route";
+import LoadingDots from "@/components/shared/LoadingDots";
 
 const ResetPasswordForm = () => {
   const [searchParams] = useSearchParams();
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const fromForgotPassword = location.state?.fromForgotPassword;
   // Access email from query parameters using useSearchParams
   const email = searchParams.get("email");
-  const { handleResetPassword } = useResetPassword();
+  const { handleResetPassword , loading } = useResetPassword();
   const [isPasswordVisible, setIsPasswordVisible] = useState({
     password: false,
     confirmPassword: false,
@@ -153,8 +154,8 @@ const ResetPasswordForm = () => {
                 )}
               />
             </div>
-            <Button className="w-full" type="submit">
-              Reset Password
+            <Button className="w-full" type="submit" disabled={loading}>
+              {loading ? <LoadingDots /> : "Reset Password"}
             </Button>
           </form>
         </Form>
