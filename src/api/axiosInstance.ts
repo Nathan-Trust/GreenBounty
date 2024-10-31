@@ -6,6 +6,7 @@ import axios, {
 import Cookies from "js-cookie";
 import { decrypt } from "@/services/encryption";
 import { logger } from "@/utils/logger";
+import { Green_Bounty_Routes } from "@/store/route";
 
 // Retrieve baseURL from environment variable in Vite
 const baseURL = import.meta.env.VITE_API_BASE_URL;
@@ -44,7 +45,7 @@ axiosInstance.interceptors.response.use(
     if (status === 401 || status === 500) {
       Cookies.remove("token");
       // Handle redirection or any other custom error handling logic
-      // For example: redirectToLogin();
+      window.location.href = Green_Bounty_Routes.signIn; // Use window.location.href for redirection
     } else {
       logger("An error occurred:", error?.message);
     }

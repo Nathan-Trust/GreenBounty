@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SidebarItems, Theme } from "@/models/shared";
-import { useProviderContext } from "@/utils/constants";
+import { Constants, useProviderContext } from "@/utils/constants";
 import {
   Accordion,
   AccordionContent,
@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../ui/avatar";
 import { AlignJustify, LogOut } from "lucide-react";
 import { SidebarButton } from "./shared/button";
 import GreenBountyLogo from "../../assets/logo/green-bounty-with-word.svg";
@@ -72,7 +72,7 @@ export function SidebarDesktop(props: Readonly<SidebarDesktopProps>) {
 
   return (
     <div
-      className={`overflow-hidden bg-white border-r-2  border-[#00000080] h-full ${
+      className={`overflow-hidden bg-white border-r-2   border-[#00000080] h-full  ${
         isExpanded ? "fixed z-50 lg:relative" : ""
       }`}
     >
@@ -268,14 +268,15 @@ export function SidebarDesktop(props: Readonly<SidebarDesktopProps>) {
                     }`}
                   >
                     <Avatar className="h-8 w-8 mr-1">
-                      <AvatarImage src="https://github.com/max-programming.png" />
-                      <AvatarFallback className="text-xs ">
-                        {/* {props.initials} */}
-                      </AvatarFallback>
+                      <AvatarImage
+                        src={
+                          props?.user?.profilePhoto ?? Constants.defaultAvatar
+                        }
+                      />
                     </Avatar>
                     <div className=" ml-1">
                       <p className="text-xs">
-                        {truncateText(props?.user?.fullName ?? "", 20)}
+                        {truncateText(props?.user?.name ?? "", 20)}
                       </p>
                       <p className="text-[10px]">
                         {truncateText(props?.user?.email ?? "", 20)}

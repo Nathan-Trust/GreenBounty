@@ -54,7 +54,7 @@ export const SignupAuthLayout: React.FC = () => {
           <div className="flex flex-col max-w-[500px] mx-auto h-full pt-12 pb-2 justify-between items-center">
             <div className="flex flex-1 flex-col h-full w-full items-center">
               <div className="flex-1 w-full">
-                <img src={GreenBountyLogo} className="w-28 h-28 ml-3 mx-auto lg:hidden" alt="green-bounty-logo" />
+                <img src={GreenBountyLogo} className="w-28 h-28 ml-3  lg:hidden" alt="green-bounty-logo" />
                 <Outlet />
               </div>
             </div>

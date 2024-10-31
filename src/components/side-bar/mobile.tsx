@@ -2,7 +2,7 @@ import { Sheet, SheetClose, SheetContent, SheetHeader } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { LogOut, MoreHorizontal, X } from "lucide-react";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../ui/avatar";
 import { Link, useLocation } from "react-router-dom";
 import {
   Accordion,
@@ -11,7 +11,7 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { useCallback, useState } from "react";
-import { useProviderContext } from "@/utils/constants";
+import { Constants, useProviderContext } from "@/utils/constants";
 import { SidebarMobileButton } from "./shared/button";
 import { truncateText } from "@/utils/text";
 import { SidebarItems, Theme } from "@/models/shared";
@@ -161,13 +161,16 @@ export function SidebarMobile(props: Readonly<SidebarMobileProps>) {
                   <div className="flex justify-between items-center w-full">
                     <div className="flex gap-2">
                       <div className="flex  items-center gap-4">
-                        <Avatar className="h-10 w-10">
-                          <AvatarImage src="https://github.com/max-programming.png" />
-                          <AvatarFallback></AvatarFallback>
+                        <Avatar className="h-8 w-8 mr-1">
+                          <AvatarImage
+                            src={
+                              props?.user?.profilePhoto ?? Constants.defaultAvatar
+                            }
+                          />
                         </Avatar>
                         <div className=" ml-1 text-start">
                           <p className="text-xs">
-                            {truncateText(props?.user?.fullName ?? "", 20)}
+                            {truncateText(props?.user?.name ?? "", 20)}
                           </p>
                           <p className="text-[10px]">
                             {truncateText(props?.user?.email ?? "", 20)}
