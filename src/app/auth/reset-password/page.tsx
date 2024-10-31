@@ -25,8 +25,28 @@ import useResetPassword from "@/hooks/auth/useResetPassword";
 import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { Green_Bounty_Routes } from "@/store/route";
 import LoadingDots from "@/components/shared/LoadingDots";
+import useMetaTagUpdater, { useTitleUpdater } from "@/utils/meta";
 
 const ResetPasswordForm = () => {
+  useTitleUpdater({
+    [Green_Bounty_Routes.resetPassword()]: "GreenBounty | Reset Password",
+  });
+
+  useMetaTagUpdater({
+    [Green_Bounty_Routes.resetPassword()]: [
+      {
+        name: "description",
+        content:
+          "Reset your GreenBounty account password to regain access. Please enter your new password to complete the reset process.",
+      },
+      {
+        name: "keywords",
+        content:
+          "GreenBounty, reset password, account recovery, password reset, security",
+      },
+    ],
+  });
+
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,6 +68,7 @@ const ResetPasswordForm = () => {
     },
     mode: "onChange",
   });
+  
   useEffect(() => {
     if (!fromForgotPassword) {
       navigate(Green_Bounty_Routes.signIn, { replace: true });

@@ -2,27 +2,24 @@ import { sidebarItems } from "@/store/sidebar";
 import { SidebarDesktop } from "./desktop";
 import { SidebarMobile } from "./mobile";
 import { useMediaQuery } from "usehooks-ts";
-import {  useProviderContext } from "@/utils/constants";
+import { useStore } from "@/store/user";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import { Green_Bounty_Routes } from "@/store/route";
 
 export function Sidebar() {
-  const { user: userDetails } = useProviderContext();
+  const { userData } = useStore();
+  const navigate = useNavigate()
   // const { initials, fullName } = getUserDetails(userDetails!);
 
   const isDesktop = useMediaQuery("(min-width: 640px)", {
     initializeWithValue: false,
   });
 
-  const user = {
-    id:  "",
-    name: "",
-    firstName:  "",
-    lastName:  "",
-    email: userDetails?.email ?? "",
-    avatar: "https://example.com/avatar.jpg",
-  };
   const handleLogOut = () => {
-    // eslint-disable-next-line no-console
-    console.log("handle logout isnt beans man");
+    Cookies.remove("token");
+    Cookies.remove("userData");
+    navigate(Green_Bounty_Routes.signIn)
   };
 
   if (isDesktop) {
@@ -30,7 +27,7 @@ export function Sidebar() {
       <SidebarDesktop
         sidebarItems={sidebarItems}
         handleLogout={handleLogOut}
-        user={user}
+        user={userData}
         // initials={initials}
         // fullName={fullName}
       />
@@ -41,7 +38,7 @@ export function Sidebar() {
     <SidebarMobile
       sidebarItems={sidebarItems}
       handleLogout={handleLogOut}
-      user={user}
+      user={userData}
       // initials={initials}
       // fullName={fullName}
     />

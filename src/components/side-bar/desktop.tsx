@@ -12,8 +12,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { AlignJustify, LogOut } from "lucide-react";
 import { SidebarButton } from "./shared/button";
-import { User } from "./mobile";
-// import { truncateText } from "@/utils/text";
+import GreenBountyLogo from "../../assets/logo/green-bounty-with-word.svg";
+import { User } from "@/services/user";
+import { truncateText } from "@/utils/text";
 
 interface SidebarDesktopProps {
   sidebarItems: SidebarItems;
@@ -71,8 +72,8 @@ export function SidebarDesktop(props: Readonly<SidebarDesktopProps>) {
 
   return (
     <div
-      className={`overflow-hidden bg-white border-r border pt-12  border-lightGray_two h-full ${
-        isExpanded ? "fixed z-10 lg:relative" : ""
+      className={`overflow-hidden bg-white border-r-2  border-[#00000080] h-full ${
+        isExpanded ? "fixed z-50 lg:relative" : ""
       }`}
     >
       <aside
@@ -88,14 +89,16 @@ export function SidebarDesktop(props: Readonly<SidebarDesktopProps>) {
           }`}
           onClick={toggleSidebar}
         >
-          <p className={`linkText ${isExpanded ? "block" : "hidden lg:block"}`}>
-            Onsite
-          </p>
           <AlignJustify
             size={20}
             className={`${isExpanded ? "" : "mt-3 lg:mt-0"}`}
           />
         </button>
+        <img
+          className="hidden lg:block w-24 h-24 ml-2.5"
+          src={GreenBountyLogo}
+        />
+
         <div className="flex flex-col flex-1 justify-between mt-4 pt-4 lg:mt-0 h-full">
           <div className="flex flex-col gap-5 w-full h-full ">
             {props.sidebarItems.theme.map((theme: Theme) => (
@@ -272,10 +275,10 @@ export function SidebarDesktop(props: Readonly<SidebarDesktopProps>) {
                     </Avatar>
                     <div className=" ml-1">
                       <p className="text-xs">
-                        {/* {truncateText(props.fullName, 20)} */}
+                        {truncateText(props?.user?.fullName ?? "", 20)}
                       </p>
                       <p className="text-[10px]">
-                        {/* {truncateText(props.user?.email ?? "", 20)} */}
+                        {truncateText(props?.user?.email ?? "", 20)}
                       </p>
                     </div>
                   </div>

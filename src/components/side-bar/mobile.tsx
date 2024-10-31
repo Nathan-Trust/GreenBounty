@@ -13,16 +13,11 @@ import {
 import { useCallback, useState } from "react";
 import { useProviderContext } from "@/utils/constants";
 import { SidebarMobileButton } from "./shared/button";
-// import { truncateText } from "@/utils/text";
+import { truncateText } from "@/utils/text";
 import { SidebarItems, Theme } from "@/models/shared";
+import { User } from "@/services/user";
 
-export interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  avatar: string;
-}
+
 
 interface SidebarMobileProps {
   sidebarItems: SidebarItems;
@@ -170,10 +165,14 @@ export function SidebarMobile(props: Readonly<SidebarMobileProps>) {
                           <AvatarImage src="https://github.com/max-programming.png" />
                           <AvatarFallback></AvatarFallback>
                         </Avatar>
-                        <span className="text-xs">
-                          {" "}
-                          {/* {truncateText(props.fullName, 20)} */}
-                        </span>
+                        <div className=" ml-1 text-start">
+                          <p className="text-xs">
+                            {truncateText(props?.user?.fullName ?? "", 20)}
+                          </p>
+                          <p className="text-[10px]">
+                            {truncateText(props?.user?.email ?? "", 20)}
+                          </p>
+                        </div>
                       </div>
                     </div>
                     <MoreHorizontal size={20} />

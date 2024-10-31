@@ -3,7 +3,7 @@ import { APIs } from "./API";
 
 export type User = {
   _id: string;
-  name: string;
+  fullName: string;
   email: string;
   emailVerified: boolean;
   role: "USER" | "ADMIN" | "MODERATOR"; // Assuming possible roles
@@ -20,20 +20,12 @@ export type User = {
   accessToken: string;
 };
 
-
 export class UserService {
   // Get Current User
-  static async getCurrentUser(userId: string): Promise<User> {
-    const url =
-      typeof APIs.getCurrentUser.url === "function"
-        ? APIs.getCurrentUser.url({ userId })
-        : APIs.getCurrentUser.url;
+  static async getCurrentUser(): Promise<User> {
+    const response = await axiosInstance.get(APIs.getCurrentUser.url as string);
+    const user = response.data.data;
 
-    const response = await axiosInstance.get(url);
-      const user = response.data.user;
-
-    localStorage.setItem("user", JSON.stringify(response.data.user));
-
-    return user
+    return user;
   }
 }

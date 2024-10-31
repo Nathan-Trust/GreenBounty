@@ -3,9 +3,10 @@ import { create } from "zustand";
 import Cookies from "js-cookie";
 import { decrypt, encrypt } from "@/services/encryption";
 import { logger } from "@/utils/logger";
+import { User } from "@/services/user";
 
 interface UserState {
-  userData: any | null;
+  userData: User | null;
   preSaveUserData: any | null;
   token: string | null;
   saveUserToken: (token: string) => void;

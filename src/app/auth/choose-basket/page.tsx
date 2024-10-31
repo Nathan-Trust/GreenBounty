@@ -17,6 +17,7 @@ import { useStore } from "@/store/user";
 import { errorToast } from "@/utils/toast";
 import { ApiError } from "@/models/serviceRequest";
 import LoadingDots from "@/components/shared/LoadingDots";
+import useMetaTagUpdater, { useTitleUpdater } from "@/utils/meta";
 
 type Basket = {
   name: "Standard" | "Premium";
@@ -39,6 +40,22 @@ const baskets: Basket[] = [
 ];
 
 const ChooseBasketForm = () => {
+    useTitleUpdater({
+      [Green_Bounty_Routes.chooseBasket]: "GreenBounty | Choose Basket",
+    });
+    useMetaTagUpdater({
+      [Green_Bounty_Routes.chooseBasket]: [
+        {
+          name: "description",
+          content:
+            "Verify the OTP sent to your email to reset your password on GreenBounty.",
+        },
+        {
+          name: "keywords",
+          content: "GreenBounty, OTP, verify email, password reset",
+        },
+      ],
+    });
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<"Premium" | "Standard" | null>(null);
   const { saveUserData } = useStore();

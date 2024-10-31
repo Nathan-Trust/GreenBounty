@@ -11,8 +11,28 @@ import {
 import { Green_Bounty_Routes } from "@/store/route";
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import useMetaTagUpdater, { useTitleUpdater } from "@/utils/meta";
 
 const CongratulationsPage = () => {
+  useTitleUpdater({
+    [Green_Bounty_Routes.congratulations]: "GreenBounty | Congratulations",
+  });
+
+  useMetaTagUpdater({
+    [Green_Bounty_Routes.congratulations]: [
+      {
+        name: "description",
+        content:
+          "Congratulations on successfully creating your GreenBounty account! Start turning trash into treasure today.",
+      },
+      {
+        name: "keywords",
+        content:
+          "GreenBounty, congratulations, account created, sustainability, eco-friendly",
+      },
+    ],
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,7 +45,7 @@ const CongratulationsPage = () => {
   }, [fromVerifyOtp, navigate]);
 
   const defaultOptions = {
-    loop: true,
+    loop: false,
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
@@ -44,7 +64,11 @@ const CongratulationsPage = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Button type="submit" className="w-full">
+        <Button
+          type="submit"
+          onClick={() => navigate(Green_Bounty_Routes.signIn)}
+          className="w-full"
+        >
           Proceed to Dashboard{" "}
         </Button>
       </CardContent>

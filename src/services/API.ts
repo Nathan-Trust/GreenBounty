@@ -18,7 +18,7 @@ export const APIs = {
   // User
   getCurrentUser: {
     method: "GET" as const,
-    url: ({ userId }: { userId: string }) => `/user/${userId}`,
+    url:  `/user`,
   } as ApiRouteType,
 
   // Projects (New Route Added)

@@ -16,7 +16,7 @@ export class AuthService {
       email,
       password,
     });
-    const userData = response.data;
+    const userData = response.data.data;
     return userData;
   }
 

@@ -18,15 +18,25 @@ import { useVerifyEmail } from "@/hooks/auth/useVerifyEmail";
 import { useEffect } from "react";
 
 const VerifyOtpPage = () => {
-  useTitleUpdater({
-    [Green_Bounty_Routes.verifyOtp()]: "GreenBounty | Verify OTP",
-  });
-  useMetaTagUpdater({
-    "/auth/sign-in": [
-      { name: "description", content: "This is the login page description." },
-      { name: "keywords", content: "login, authentication, user" },
-    ],
-  });
+useTitleUpdater({
+  [Green_Bounty_Routes.verifyOtp()]: "GreenBounty | Verify OTP",
+});
+
+useMetaTagUpdater({
+  [Green_Bounty_Routes.verifyOtp()]: [
+    {
+      name: "description",
+      content:
+        "Enter the OTP sent to your email to verify your account and complete your GreenBounty registration.",
+    },
+    {
+      name: "keywords",
+      content:
+        "GreenBounty, verify OTP, account verification, registration, security",
+    },
+  ],
+});
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,7 +45,7 @@ const VerifyOtpPage = () => {
 
   // Access email from query parameters using useSearchParams
   const email = searchParams.get("email");
-  const { mutate: verifyEmailOtp, isSuccess , isPending } = useVerifyEmailOtp(); // Get the mutate function from the custom hook
+  const { mutate: verifyEmailOtp, isPending } = useVerifyEmailOtp({fromSignUp:true}); // Get the mutate function from the custom hook
   // Access email from state passed during navigation
   const fromSignUp = location.state?.fromSignUp;
 
@@ -47,12 +57,6 @@ const VerifyOtpPage = () => {
 
   const onSubmit = async (data: VerifyOtpFormSchemaType) => {
     verifyEmailOtp(data);
-    if (isSuccess) {
-      // Navigate to the congratulations page if verification is successful
-      navigate(Green_Bounty_Routes.congratulations, {
-        state: { fromVerifyOtp: true },
-      });
-    }
   };
 
   return (
@@ -65,7 +69,11 @@ const VerifyOtpPage = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <OtpForm onSubmit={onSubmit} email={email ?? ""} isPending={isPending} />
+        <OtpForm
+          onSubmit={onSubmit}
+          email={email ?? ""}
+          isPending={isPending}
+        />
       </CardContent>
       <CardFooter className=" w-full ">
         <p className="text-sm text-center mx-auto">

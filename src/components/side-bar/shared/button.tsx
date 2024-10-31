@@ -22,7 +22,7 @@ export function SidebarButton({
       )}
       onClick={onClick} // Assign onClick handler to div
     >
-      {Icon && <Icon size={14} className="shake" />}
+      {Icon && <Icon size={17} className="shake" />}
       <div className="no-underline">{children}</div>
     </div>
   );

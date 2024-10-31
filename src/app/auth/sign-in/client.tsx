@@ -32,7 +32,7 @@ import { Separator } from "@/components/ui/separator";
 import { ApiError } from "@/models/serviceRequest";
 import { useVerifyEmail } from "@/hooks/auth/useVerifyEmail";
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { mutateAsync: login, isPending } = useLogin();
   const { mutate: sendOtp } = useVerifyEmail(); // Instantiate the useVerifyEmail hook
@@ -86,7 +86,7 @@ const SignUpForm = () => {
         rememberUserDetails(dataWithoutTerms);
       }
 
-      if (res.role == null) {
+      if (res.basket == null) {
         navigate(Green_Bounty_Routes.chooseBasket, {
           state: { fromSignIn: true },
         });
@@ -222,4 +222,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

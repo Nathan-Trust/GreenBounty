@@ -1,28 +1,27 @@
 import { QueryErrCodes, QueryKeys } from "@/models/query";
+import { decrypt } from "@/services/encryption";
 import { UserService } from "@/services/user";
+import { useStore } from "@/store/user";
 import { errorToast, successToast } from "@/utils/toast";
 import { useQuery } from "@tanstack/react-query";
-
-const getUserId = () => {
-  const userData = localStorage.getItem("initial_user_response");
-  const user =
-    userData && userData !== "undefined" ? JSON.parse(userData) : null;
-  return user ? user.user_id : null;
-};
+import Cookies from "js-cookie";
 
 export const useFetchMe = () => {
-  const userId = getUserId();
-
   const { data, isLoading, isSuccess, isError } = useQuery({
-    queryKey: [QueryKeys.Get_Current_User, userId],
-    enabled: !!userId,
-    queryFn: () => UserService.getCurrentUser(userId),
+    queryKey: [QueryKeys.Get_Current_User],
+    queryFn: () => UserService.getCurrentUser(),
     meta: {
       errCode: QueryErrCodes.GetCurrentUser,
     },
   });
+  const { saveUserData } = useStore();
+  const token = Cookies.get("token");
+  const user = token ? decrypt(token) : null;
 
   if (isSuccess && data) {
+    const mergedData = { ...data, accessToken: user };
+    saveUserData(mergedData);
+
     successToast({
       title: "User Data Loaded",
       message: "Your profile data has been successfully loaded.",

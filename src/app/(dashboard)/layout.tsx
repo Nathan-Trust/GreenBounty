@@ -3,34 +3,24 @@ import { useEffect, useRef } from "react";
 import { useProviderContext } from "@/utils/constants";
 import Navbar from "@/components/navbar";
 import { Sidebar } from "@/components/side-bar";
-import { getUser, useFetchMe } from "@/hooks/useCurrentUser";
 import { Green_Bounty_Routes } from "@/store/route";
-import SplashScreen from "@/components/splash-screen";
+import Cookies from "js-cookie";
+import { decrypt } from "@/services/encryption";
 
 const Layout = () => {
-  const { active, setUser } = useProviderContext();
+  const { active } = useProviderContext();
   const location = useLocation();
   const outletRef = useRef<HTMLDivElement>(null);
-  const { data, isLoading } = useFetchMe();
   const navigate = useNavigate();
-  const localUser = getUser();
-  const isAuthenticated = Boolean(data || localUser);
-
-  // Set user data once it's fetched
-  useEffect(() => {
-    if (data && data !== localUser) {
-      setUser(data);
-    } else if (localUser && localUser !== data) {
-      setUser(localUser);
-    }
-  }, [data, localUser, setUser]);
+  const token = Cookies.get("token");
+  const user = token ? decrypt(token) : null;
 
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        document.title = "Onsite | Inactive";
+        document.title = "GreenBounty | Inactive";
       } else {
-        document.title = `Onsite | ${active}`;
+        document.title = `GreenBounty | ${active}`;
       }
     };
     handleVisibilityChange();
@@ -51,25 +41,22 @@ const Layout = () => {
   }, [location]);
 
   useEffect(() => {
-    //     const accessToken = localStorage.getItem("access_token");
-    // && !accessToken
-    if (!isLoading && !isAuthenticated) {
+    if (!user) {
       navigate(Green_Bounty_Routes.signIn, { replace: true });
     }
-  }, [isLoading, isAuthenticated, navigate]);
-
-  if (!data) return <SplashScreen />;
+  }, [navigate,user]);
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col font-poppins">
-      <Navbar />
-      <div className="flex-1 h-screen  flex">
-        <Sidebar />
-        <div
-          ref={outletRef}
-          className=" flex flex-1 w-full pt-12 h-full overflow-y-auto bg-lightGray"
-        >
+    <div className="h-screen overflow-hidden flex w-full  font-poppins">
+      <Sidebar />
+      <div
+        ref={outletRef}
+        className=" flex flex-col flex-1 w-full h-full overflow-y-auto bg-lightGray"
+      >
+        <Navbar />
+        <div className="flex-1 flex justify-between">
           <Outlet />
+          <div className="h-full border-l-2 hidden lg:block border-[#00000080] bg-white w-[30%]"></div>
         </div>
       </div>
     </div>
