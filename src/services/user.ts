@@ -3,9 +3,10 @@ import { APIs } from "./API";
 
 export type User = {
   _id: string;
-  fullName: string;
+  name: string;
   email: string;
   emailVerified: boolean;
+  profilePhoto: string | null,
   role: "USER" | "ADMIN" | "MODERATOR"; // Assuming possible roles
   basket: "STANDARD" | "PREMIUM" | "BASIC"; // Assuming possible basket types
   referralCode: string;

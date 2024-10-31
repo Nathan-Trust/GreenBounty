@@ -44,19 +44,24 @@ const Layout = () => {
     if (!user) {
       navigate(Green_Bounty_Routes.signIn, { replace: true });
     }
-  }, [navigate,user]);
+  }, [navigate, user]);
 
   return (
-    <div className="h-screen overflow-hidden flex w-full  font-poppins">
+    <div className="overflow-hidden flex h-screen font-poppins">
       <Sidebar />
       <div
         ref={outletRef}
-        className=" flex flex-col flex-1 w-full h-full overflow-y-auto bg-lightGray"
+        className="flex flex-col flex-1 w-full h-full bg-lightGray"
       >
         <Navbar />
-        <div className="flex-1 flex justify-between">
-          <Outlet />
-          <div className="h-full border-l-2 hidden lg:block border-[#00000080] bg-white w-[30%]"></div>
+        <div className="grid grid-cols-12 justify-between w-full h-full">
+          <div
+            className="h-full col-span-12 lg:col-span-9 overflow-y-auto"
+            style={{ maxHeight: "calc(100vh - 56px)" }}
+          >
+         <Outlet/>
+          </div>
+          <div className="h-full border-l-2 hidden lg:block border-[#00000080] bg-white col-span-3"></div>
         </div>
       </div>
     </div>
