@@ -15,6 +15,7 @@ import ForgotPasswordPage from "@/app/auth/forgot-password/page";
 import ResetPasswordForm from "@/app/auth/reset-password/page";
 import ChooseBasketForm from "@/app/auth/choose-basket/page";
 import ConfirmEmailBeforeResetPassword from "@/app/auth/confirm-reset-email/page";
+import Rewards from "@/app/(dashboard)/rewards/page";
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
         path: Green_Bounty_Routes.dashboard,
         element: <Dashboard />,
       },
+      {
+        path: Green_Bounty_Routes.rewards,
+        element: <Rewards />,
+      }
     ],
     errorElement: <ErrorPage />,
   },
