@@ -56,7 +56,7 @@ const Layout = () => {
         <Navbar />
         <div className="grid grid-cols-12 justify-between w-full h-full">
           <div
-            className="h-full col-span-12 lg:col-span-9 overflow-y-auto"
+            className="h-full col-span-12 lg:col-span-9  bg-white overflow-y-auto"
             style={{ maxHeight: "calc(100vh - 56px)" }}
           >
          <Outlet/>

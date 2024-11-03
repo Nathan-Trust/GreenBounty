@@ -61,6 +61,7 @@ const SignInForm = () => {
     if (storedData) {
       form.reset({
         email: storedData.email || "",
+        password:storedData.password || "",
         rememberMe: storedData.rememberMe || false,
       });
     }
@@ -83,7 +84,7 @@ const SignInForm = () => {
       }
 
       if (rememberMe) {
-        rememberUserDetails(dataWithoutTerms);
+        rememberUserDetails(values);
       }
 
       if (res.basket == null) {

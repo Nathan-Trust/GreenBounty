@@ -58,13 +58,30 @@ const BasketFillLoaderCard: React.FC<BasketFillLoaderCardProps> = ({
     },
     responsive: [
       {
-        breakpoint: 480,
+        breakpoint: 2560, // Medium screen
         options: {
           chart: {
-            width: 200,
+            width: "78%",
+            height: "100%",
           },
           legend: {
-            position: "bottom",
+            position: "right",
+          },
+        },
+      },
+      {
+        breakpoint: 806, // Small screen
+        options: {
+          chart: {
+            width: "60%",
+          },
+        },
+      },
+      {
+        breakpoint: 480, // Extra small screen
+        options: {
+          chart: {
+            width: "60%",
           },
         },
       },
@@ -75,14 +92,13 @@ const BasketFillLoaderCard: React.FC<BasketFillLoaderCardProps> = ({
   };
 
   return (
-    <Card className="col-span-12 lg:col-span-7 row-span-2 bg-[#548235] text-white">
+    <Card className="col-span-12 md:col-span-6 lg:col-span-7 md:order-4 lg:order-2 md:row-span-2 bg-[#548235] text-white">
       <CardContent className="flex flex-col h-full pb-2 md:pb-0">
-        <div className="flex flex-row justify-between h-full">
+        <div className="flex flex-row  justify-between h-full">
           <ReactApexChart
             options={chartOptions}
             series={seriesData}
             type="donut"
-            width="89%" // Adjust as needed for your layout
             aria-label="Basket fill loader chart"
           />
           <div className="w-fit h-full  flex flex-col justify-between">
@@ -104,12 +120,12 @@ const BasketFillLoaderCard: React.FC<BasketFillLoaderCardProps> = ({
                 <span>80%-100%</span>
               </div>
             </div>
-            <Button className="text-[#548235] hidden lg:block mt-6 bg-white w-fit mb-3 hover:bg-white">
+            {/* <Button className="text-[#548235] hidden lg:block mt-6 bg-white w-fit mb-3 hover:bg-white">
               Add Recycables
-            </Button>
+            </Button> */}
           </div>
         </div>
-        <Button className="text-[#548235] self-end bg-white lg:hidden w-fit mb-3 hover:bg-white">
+        <Button className="text-[#548235] self-end bg-white  w-fit mb-3 hover:bg-white">
           Add Recycables
         </Button>
       </CardContent>

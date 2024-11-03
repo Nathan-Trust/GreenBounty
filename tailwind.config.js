@@ -18,6 +18,14 @@ module.exports = {
         "mini-md": "426px",
       },
     },
+    screens: {
+      sm: "640px",
+      md: "768px",
+      lg: "1128px",
+      xl: "1280px",
+      "2xl": "1536px",
+      "mini-md": "415px",
+    },
     extend: {
       colors: {
         lightGray: "#f1f4f6",
@@ -88,7 +96,7 @@ module.exports = {
             height: "0",
           },
         },
-          "caret-blink": {
+        "caret-blink": {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
