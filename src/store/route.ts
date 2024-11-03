@@ -16,8 +16,11 @@ export class Green_Bounty_Routes {
   static readonly resetPassword = (email?: string) =>
     `/auth/reset-password${email ? `?email=${encodeURIComponent(email)}` : ""}`;
   static readonly chooseBasket = "/auth/choose-basket";
+
+
   // Dashboard
   static readonly dashboard = "/dashboard";
+  static readonly rewards = "/rewards"
 
   //settings
   static readonly settings = "/settings";
