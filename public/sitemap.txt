@@ -1,5 +1,0 @@
-https://green-bounty.vercel.app/
-https://green-bounty.vercel.app/auth/sign-in
-https://green-bounty.vercel.app/auth/sign-up
-https://green-bounty.vercel.app/dashboard
-https://green-bounty.vercel.app/rewards
