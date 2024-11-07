@@ -103,3 +103,21 @@ export const getInitials = (firstName: string, lastName: string): string => {
 export const formatFullName = (firstName: string, lastName: string): string => {
   return `${firstName} ${lastName}`;
 };
+
+/**
+ * Formats a camelCase or PascalCase string into a human-readable string with spaces and proper capitalization.
+ * For example, "mypickup" becomes "My Pickup" and "Mypickup" becomes "My Pickup".
+ *
+ * @param {string} text - The input string to format, typically in camelCase or PascalCase.
+ * @returns {string} - The formatted string with spaces between words and each word capitalized.
+ */
+export const formatText = (text: string): string => {
+  // Insert spaces before uppercase letters and after lowercase letters
+  const spacedText = text.replace(/([a-z])([A-Z])/g, '$1 $2'); // camelCase/PascalCase spacing
+  
+  // Capitalize the first letter of the first word, and ensure the rest are in lowercase
+  return spacedText
+    .replace(/^./, (str) => str.toUpperCase()) // Capitalize first letter
+    .replace(/([A-Z])/g, (match) => ' ' + match.toLowerCase()) // Convert remaining capital letters to lowercase
+    .trim(); // Remove leading space, if any
+};
