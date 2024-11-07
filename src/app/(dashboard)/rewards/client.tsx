@@ -1,5 +1,9 @@
+import ShareRewards from "@/components/rewards/modal/ShareRewards";
+import TransferEcoCoin from "@/components/rewards/modal/TransferEcoCoin";
+import WithdrawEcoCoin from "@/components/rewards/modal/WithdrawEcoCoin";
 import RewardCarousel from "@/components/rewards/RewardCarousel";
 import RewardsBarChart from "@/components/rewards/RewardsBarChart";
+import CustomDialog from "@/components/shared/CustomDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -9,7 +13,6 @@ import {
   Share2,
 } from "lucide-react";
 
-
 export interface MonthlyRewardData {
   month: string;
   reward: number; // Total reward for the month
@@ -18,7 +21,6 @@ export interface MonthlyRewardData {
 export interface DataByRange {
   year: MonthlyRewardData[];
 }
-
 
 const dataByRange: DataByRange = {
   year: [
@@ -67,16 +69,37 @@ const RewardsClient = () => {
       </Card>
       <div className="col-span-12 lg:col-span-2  gap-3 ">
         <div className="flex gap-3 lg:gap-0 lg:flex-col lg:justify-between h-full">
-          <Button className="lg:w-full h-[28px] rounded-sm text-xs flex justify-start bg-white border border-[#548235] text-[#548235] hover:bg-white gap-1">
-            <ChartNoAxesColumnIncreasing size={15} />
-            Transfer
-          </Button>
-          <Button className="lg:w-full h-[28px] rounded-sm text-xs flex justify-start bg-white border border-[#548235] text-[#548235] hover:bg-white gap-1">
-            <Share size={15} /> Withdraw
-          </Button>
-          <Button className="lg:w-full h-[28px] rounded-sm text-xs flex justify-start gap-1">
-            <Share2 size={15} /> Share
-          </Button>
+          <CustomDialog
+            triggerComponent={
+              <Button className="lg:w-full h-[28px] rounded-sm text-xs flex justify-start bg-white border border-[#548235] text-[#548235] hover:bg-white gap-1">
+                <ChartNoAxesColumnIncreasing size={15} />
+                Transfer
+              </Button>
+            }
+            className="w-full"
+          >
+            <TransferEcoCoin />
+          </CustomDialog>
+          <CustomDialog
+            triggerComponent={
+              <Button className="lg:w-full h-[28px] rounded-sm text-xs flex justify-start bg-white border border-[#548235] text-[#548235] hover:bg-white gap-1">
+                <Share size={15} /> Withdraw
+              </Button>
+            }
+            className="w-full"
+          >
+            <WithdrawEcoCoin />
+          </CustomDialog>
+          <CustomDialog
+            triggerComponent={
+              <Button className="lg:w-full h-[28px] rounded-sm text-xs flex justify-start gap-1">
+                <Share2 size={15} /> Share
+              </Button>
+            }
+            className="w-full"
+          >
+            <ShareRewards />
+          </CustomDialog>
         </div>
       </div>
       <RewardsBarChart dataByRange={dataByRange} chartTitle="Rewards" />

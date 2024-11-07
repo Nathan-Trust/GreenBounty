@@ -218,7 +218,7 @@ export function SidebarDesktop(props: Readonly<SidebarDesktopProps>) {
                         icon={link.icon}
                         className={`w-full ${
                           index > 0 ? "mt-2" : "mt-0"
-                        } items-center text-xs ${
+                        } items-center text-sm ${
                           isExpanded
                             ? " px-4"
                             : "justify-center lg:justify-start"

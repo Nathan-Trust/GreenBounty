@@ -1,3 +1,5 @@
+import { MyProfilePageType } from "@/models/myprofile";
+
 export class Green_Bounty_Routes {
   //landing-page
   static readonly home = "/";
@@ -17,10 +19,10 @@ export class Green_Bounty_Routes {
     `/auth/reset-password${email ? `?email=${encodeURIComponent(email)}` : ""}`;
   static readonly chooseBasket = "/auth/choose-basket";
 
-
   // Dashboard
   static readonly dashboard = "/dashboard";
-  static readonly rewards = "/rewards"
+  static readonly rewards = "/rewards";
+  static readonly myProfile = (tab: MyProfilePageType) => `/profile?tab=${tab}`;
 
   //settings
   static readonly settings = "/settings";
