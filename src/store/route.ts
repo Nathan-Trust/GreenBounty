@@ -4,6 +4,7 @@ export class Green_Bounty_Routes {
   //landing-page
   static readonly home = "/";
   static readonly about = "/about";
+  static readonly privacyPolicy = "/privacy-policy"; 
   // Auth
   static readonly signIn = "/auth/sign-in";
   static readonly signUp = "/auth/sign-up";
@@ -23,6 +24,8 @@ export class Green_Bounty_Routes {
   static readonly dashboard = "/dashboard";
   static readonly rewards = "/rewards";
   static readonly myProfile = (tab: MyProfilePageType) => `/profile?tab=${tab}`;
+  static readonly addRecycables = "/add-recycables"
+  
 
   //settings
   static readonly settings = "/settings";

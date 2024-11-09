@@ -74,7 +74,6 @@ const MyProfileDetails = () => {
   const onSubmit = async (values: z.infer<typeof MyProfileFormSchema>) => {
     try {
       await updateUser(values);
-      // Optionally handle success (like updating context or notifying the user)
     } catch (err) {
       logger("Error updating user details", err);
     }
@@ -82,11 +81,11 @@ const MyProfileDetails = () => {
 
   return (
     <Card className="shadow-none border-none outline-none">
-      <CardHeader>
+      <CardHeader className="p-0 pb-6 md:p-6">
         <CardTitle>Personal Information</CardTitle>
         <CardDescription>Edit your information</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0 md:p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="relative w-fit h-fit">
@@ -107,7 +106,7 @@ const MyProfileDetails = () => {
                 <Camera />
               </label>
             </div>
-            <div className="grid lg:grid-cols-2 gap-3 items-start">
+            <div className="grid md:grid-cols-2 gap-3 items-start">
               <FormField
                 control={form.control}
                 name="name"

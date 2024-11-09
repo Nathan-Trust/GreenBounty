@@ -1,8 +1,4 @@
-import {
-  LayoutDashboard,
-  Star,
-  User,
-} from "lucide-react";
+import { Home, LayoutDashboard, Star, User } from "lucide-react";
 import { Green_Bounty_Routes } from "./route";
 import { SidebarItems } from "@/models/shared";
 
@@ -14,18 +10,24 @@ export const sidebarItems: SidebarItems = {
         {
           label: "Dashboard",
           href: Green_Bounty_Routes.dashboard,
-          icon: LayoutDashboard ,
-        }, {
+          icon: LayoutDashboard,
+        },
+        {
+          label: "Add Recycables",
+          href: Green_Bounty_Routes.addRecycables,
+          icon: Home,
+        },
+        {
           label: "Rewards",
           href: Green_Bounty_Routes.rewards,
-          icon: Star ,	
-        }, {
+          icon: Star,
+        },
+        {
           label: "My Profile",
           href: "/profile",
-          icon:User,
-        }
+          icon: User,
+        },
       ],
     },
-
   ],
 };

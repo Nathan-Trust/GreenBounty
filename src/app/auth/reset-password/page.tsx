@@ -53,7 +53,7 @@ const ResetPasswordForm = () => {
   const fromForgotPassword = location.state?.fromForgotPassword;
   // Access email from query parameters using useSearchParams
   const email = searchParams.get("email");
-  const { handleResetPassword , loading } = useResetPassword();
+  const { handleResetPassword , loading } = useResetPassword(true);
   const [isPasswordVisible, setIsPasswordVisible] = useState({
     password: false,
     confirmPassword: false,

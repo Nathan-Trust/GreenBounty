@@ -6,6 +6,9 @@ import { Sidebar } from "@/components/side-bar";
 import { Green_Bounty_Routes } from "@/store/route";
 import Cookies from "js-cookie";
 import { decrypt } from "@/services/encryption";
+import { Button } from "@/components/ui/button";
+import { useStore } from "@/store/user";
+import { motion } from "framer-motion";
 
 const Layout = () => {
   const { active } = useProviderContext();
@@ -14,6 +17,7 @@ const Layout = () => {
   const navigate = useNavigate();
   const token = Cookies.get("token");
   const user = token ? decrypt(token) : null;
+  const { userData } = useStore();
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -59,9 +63,73 @@ const Layout = () => {
             className="h-full col-span-12 lg:col-span-9  bg-white overflow-y-auto"
             style={{ maxHeight: "calc(100vh - 56px)" }}
           >
-         <Outlet/>
+            <Outlet />
           </div>
-          <div className="h-full border-l-2 hidden lg:block border-[#00000080] bg-white col-span-3"></div>
+          <div className="h-full border-l-2 hidden lg:block p-3 border-[#00000080] bg-white col-span-3">
+            {userData?.basket === "STANDARD" && (
+              <div key={location.key} className="flex h-full items-end w-full">
+                <div className="mt-6 w-full">
+                  <motion.p
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeOut",
+                    }}
+                    className="text-xl font-semibold"
+                  >
+                    Premium Plan
+                  </motion.p>
+
+                  <motion.div
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeOut",
+                      delay: 0.3, // Delay to make the text animate first
+                    }}
+                    className="bg-[#d6e1cf] rounded-sm p-3 text-xs mt-2 w-full"
+                  >
+                    <p>Recycle unlimited premium items. Want more features?</p>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        ease: "easeInOut",
+                        delay: 0.5, // Delay button animation
+                      }}
+                    >
+                      <Button className="mt-4">Upgrade to Premium Plan</Button>
+                    </motion.div>
+                  </motion.div>
+                </div>
+              </div>
+            )}
+            {userData?.basket === "PREMIUM" && (
+              <div
+                key={location.key}
+                className="flex h-full items-end justify-center"
+              >
+                <div className="mb-6">
+                  <motion.p
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 1,
+                      ease: "easeOut",
+                    }}
+                    className="font-semibold text-xl mt-4 text-center text-yellow-500"
+                  >
+                    Enjoy unlimited premium features, faster support, and much
+                    more! 🎁
+                  </motion.p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,15 +1,28 @@
 import { useMutation } from "@tanstack/react-query";
 import { MyProfileFormSchemaType } from "@/schema/myprofile";
-import { successToast, errorToast } from "@/utils/toast"; // assuming these are defined in your utils
+import { successToast, errorToast } from "@/utils/toast";
 import { ApiError } from "@/models/serviceRequest";
 import { User, UserService } from "@/services/user";
 import { useStore } from "@/store/user";
 
 export const useUpdateUser = () => {
   const { saveUserData } = useStore();
+
   return useMutation<User, unknown, MyProfileFormSchemaType>({
     mutationFn: async ({ name, photo }) => {
-      const updatedUser = await UserService.updateUser({ name, photo });
+      const formData = new FormData();
+
+      // Append name if it exists
+      if (name) {
+        formData.append("name", name);
+      }
+
+      // Append photo if it exists
+      if (photo) {
+        formData.append("photo", photo);
+      }
+
+      const updatedUser = await UserService.updateUser(formData);
       saveUserData(updatedUser);
       return updatedUser;
     },
@@ -18,7 +31,6 @@ export const useUpdateUser = () => {
         title: "Profile Updated",
         message: "Your profile has been successfully updated.",
       });
-      // Optionally, you can add any state updates here
     },
     onError: (error: unknown) => {
       errorToast({
@@ -27,7 +39,7 @@ export const useUpdateUser = () => {
           (error as ApiError)?.response?.data?.message ??
           "An error occurred while updating your profile. Please try again.",
       });
-      throw error; // re-throw the error to handle it in the component if needed
+      throw error;
     },
   });
 };

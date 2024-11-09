@@ -1,1 +1,1 @@
-export type MyProfilePageType = "mypickup" | "profile" 
+export type MyProfilePageType = "mypickup" | "profile" | "wallet" | "password";

@@ -1,4 +1,4 @@
-import  { ReactNode } from "react";
+import { ReactNode } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,8 @@ interface CustomDialogProps {
   description?: string;
   children: ReactNode;
   className?: string;
+  open?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
 }
 
 const CustomDialog = ({
@@ -23,10 +25,12 @@ const CustomDialog = ({
   description,
   children,
   className = "",
+  open,
+  onOpenChange,
 }: CustomDialogProps) => {
   return (
-    <Dialog>
-      <DialogTrigger className={cn("px-0 ", className)}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogTrigger className={cn("px-0", className)}>
         {typeof triggerComponent === "string" ? (
           <button>{triggerComponent}</button>
         ) : (

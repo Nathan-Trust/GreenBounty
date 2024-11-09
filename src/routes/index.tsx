@@ -17,6 +17,8 @@ import ChooseBasketForm from "@/app/auth/choose-basket/page";
 import ConfirmEmailBeforeResetPassword from "@/app/auth/confirm-reset-email/page";
 import Rewards from "@/app/(dashboard)/rewards/page";
 import MyProfile from "@/app/(dashboard)/my-profile/page";
+import Terms from "@/app/(landing-page)/terms/page";
+import AddRecycablesPage from "@/app/(dashboard)/add-recycables/page";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: Green_Bounty_Routes.about,
         element: <AboutPage />,
+      },
+      {
+        path: Green_Bounty_Routes.privacyPolicy,
+        element: <Terms />,
       },
     ],
   },
@@ -78,13 +84,17 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
+        path: Green_Bounty_Routes.addRecycables,
+        element:<AddRecycablesPage/>
+      },
+      {
         path: Green_Bounty_Routes.rewards,
         element: <Rewards />,
       },
       {
         path: "/profile",
         element: <MyProfile />,
-      },  
+      },
     ],
     errorElement: <ErrorPage />,
   },
