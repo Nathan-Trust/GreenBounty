@@ -22,7 +22,7 @@ const Navbar = () => {
         <Bell className="h-5" />
         <AvatarDropdown user={userData} />
         <button onClick={() => setIsSidebarOpen(true)}>
-          <Menu className="md:hidden h-5" />
+          <Menu className="sm:hidden h-5" />
         </button>
       </div>
     </div>

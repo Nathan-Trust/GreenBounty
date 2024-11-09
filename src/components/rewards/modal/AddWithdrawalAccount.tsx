@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AddWithdrawalAccountFormSchema } from "@/schema/wallet";
 import { useAccountStore } from "@/store/wallet";
+import { logger } from "@/utils/logger";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -59,7 +60,7 @@ const AddWithdrawalAccount = ({
       await fetchAccounts();
       setOpen(false);
     } catch (error) {
-      console.log("Error creating withdrawal account:", error);
+      logger("Error creating withdrawal account:", error);
     }
   }
 

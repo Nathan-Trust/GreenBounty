@@ -8,6 +8,7 @@ import {
   CardDescription,
   CardContent,
 } from "../ui/card";
+import { Badge } from "../ui/badge";
 
 const MyProfilePickup = () => {
   return (
@@ -26,9 +27,13 @@ const MyProfilePickup = () => {
             gradientColors={["#548235", "#121C0B"]}
           />
           <StatusCard
-            title="Pickup Status"
-            status="Pending"
-            icon={<Truck />}
+            title="Rank"
+            status={
+              <Badge className="text-sm bg-white hover:bg-white text-primary rounded-md font-medium mt-0.5">
+                Plastic Bounty Hunter
+              </Badge>
+            }
+            // icon={<Truck />}
             borderColor="#548235"
             gradientColors={["#548235", "#121C0B"]}
           />

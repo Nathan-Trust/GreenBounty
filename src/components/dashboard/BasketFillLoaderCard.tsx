@@ -92,7 +92,7 @@ const BasketFillLoaderCard: React.FC<BasketFillLoaderCardProps> = ({
   };
 
   return (
-    <Card className="col-span-12 md:col-span-6 lg:col-span-7 md:order-4 lg:order-2 md:row-span-2 bg-[#548235] text-white">
+    <Card className="col-span-11 md:col-span-7 md:order-3 lg:order-4 md:row-span-2 bg-[#548235] text-white">
       <CardContent className="flex flex-col h-full pb-2 md:pb-0">
         <div className="flex flex-row  justify-between h-full">
           <ReactApexChart

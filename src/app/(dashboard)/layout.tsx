@@ -53,13 +53,11 @@ const Layout = () => {
   return (
     <div className="overflow-hidden flex h-screen font-poppins">
       <Sidebar />
-      <div
-        ref={outletRef}
-        className="flex flex-col flex-1 w-full h-full bg-lightGray"
-      >
+      <div className="flex flex-col flex-1 w-full h-full bg-lightGray">
         <Navbar />
         <div className="grid grid-cols-12 justify-between w-full h-full">
           <div
+            ref={outletRef}
             className="h-full col-span-12 lg:col-span-9  bg-white overflow-y-auto"
             style={{ maxHeight: "calc(100vh - 56px)" }}
           >
