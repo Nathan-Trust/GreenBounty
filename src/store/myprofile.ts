@@ -1,3 +1,3 @@
 import { MyProfilePageType } from "@/models/myprofile";
 
-export const myProfileTabItems: MyProfilePageType[] = ["mypickup", "profile"];
+export const myProfileTabItems: MyProfilePageType[] = ["mypickup", "profile", "wallet", "password"];

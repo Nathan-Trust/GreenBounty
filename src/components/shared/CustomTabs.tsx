@@ -4,17 +4,24 @@ import { Link } from "react-router-dom"; // Import Link from React Router
 
 interface TabsProps {
   labels: string[];
-  links?: (string | null)[]; // Make links optional and allow null for tabs without links
+  links?: (string | null)[];
   className?: string;
+  activeIndex: number;
+  setActiveIndex: (index: number) => void;
 }
 
-const Tabs: React.FC<TabsProps> = ({ labels, links = [], className }) => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+const Tabs: React.FC<TabsProps> = ({
+  labels,
+  links = [],
+  className,
+  activeIndex,
+  setActiveIndex,
+}) => {
+  const tabRefs = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([]);
   const [underlineStyle, setUnderlineStyle] = useState({
     width: 0,
     left: 0,
   });
-  const tabRefs = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     const currentTab = tabRefs.current[activeIndex];
@@ -50,7 +57,9 @@ const Tabs: React.FC<TabsProps> = ({ labels, links = [], className }) => {
             }`}
             onClick={() => setActiveIndex(index)}
           >
-            <p className="whitespace-nowrap capitalize">{label == "mypickup" ? "My Pickup" : label}</p>
+            <p className="whitespace-nowrap capitalize">
+              {label == "mypickup" ? "My Pickup" : label}
+            </p>
           </Link>
         ) : (
           <button

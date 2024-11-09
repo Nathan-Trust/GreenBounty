@@ -6,7 +6,7 @@ import { ApiError } from "@/models/serviceRequest"; // Assuming you have an ApiE
 import { Green_Bounty_Routes } from "@/store/route";
 import { useNavigate } from "react-router-dom";
 
-const useResetPassword = () => {
+const useResetPassword = (navigation: boolean = false) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<{ message: string } | null>(null);
@@ -17,7 +17,9 @@ const useResetPassword = () => {
     try {
       const response = await AuthService.resetPassword(data); // Call resetPassword API
       setData({ message: response.message });
-      navigate(Green_Bounty_Routes.signIn);
+      if (navigation) {
+        navigate(Green_Bounty_Routes.signIn);
+      }
       successToast({
         title: "Password Reset Successful",
         message: "Sharp one!",

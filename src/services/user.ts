@@ -1,6 +1,6 @@
 import axiosInstance from "@/api/axiosInstance";
 import { APIs } from "./API";
-import { MyProfileFormSchemaType } from "@/schema/myprofile";
+
 
 export type User = {
   _id: string;
@@ -30,14 +30,21 @@ export class UserService {
 
     return user;
   }
-  static async updateUser(payload: MyProfileFormSchemaType): Promise<User> {
-    const response = await axiosInstance.patch(
-      "/user/profile" as string,
-      payload
-    );
-    const user = response.data.data;
 
+ /**
+   * Updates the user profile with form data, including name and photo.
+   * @param payload - FormData containing the fields to update.
+   * @returns A promise that resolves to the updated user.
+   */
+ static async updateUser(payload: FormData): Promise<User> {
+    const response = await axiosInstance.patch("/user/profile", payload, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    const user = response.data.data;
     return user;
   }
+
   
 }

@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom"; // Example for another background image
+import { Link, Outlet, useLocation } from "react-router-dom"; // Example for another background image
 import { useEffect } from "react";
 import { Green_Bounty_Routes } from "@/store/route";
 
@@ -60,9 +60,9 @@ export const SignupAuthLayout: React.FC = () => {
             </div>
             {/* Uncomment if needed */}
             <div className="flex items-center text-sm w-full justify-center gap-8 mt-24">
-              <p>Terms</p>
+              <Link to={Green_Bounty_Routes.privacyPolicy} className="hidden md:block">Terms</Link>
               <p>Copyrights GreenBounty 2024</p>
-              <p>Privacy Policy</p>
+              <Link to={Green_Bounty_Routes.privacyPolicy}>Privacy Policy</Link>
             </div>
           </div>
         </div>
