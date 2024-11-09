@@ -3,14 +3,15 @@ import PickupTable from "./PickupTable";
 import PickupTableEmptyState from "./PickupTableEmptyState";
 import { PickupTableSkeleton } from "./PickupTableSkeleton";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-const Pickup = () => {
+const Pickup = ({className}: {className?:string}) => {
   const loading = false;
   return (
-    <div className="mt-24">
+    <div className={cn("mt-24",className)}>
       <div className="flex items-center justify-between">
-              <p>Pickup History</p>
-              <Button>Schedule Pickup</Button>
+        <p>Pickup History</p>
+        <Button>Schedule Pickup</Button>
       </div>
       <FetchLoadingAndEmptyState
         isLoading={loading}

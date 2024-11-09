@@ -2,6 +2,7 @@ import { useStore } from "@/store/user";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { recyclableItems } from "@/store/add-recycables";
+import premiumBasket from "../../../assets/baskets/premiumBasketSvg.svg"
 
 const AddRecycablesClient = () => {
   const { userData } = useStore();
@@ -21,7 +22,7 @@ const AddRecycablesClient = () => {
   let basketImageSrc;
   switch (basketType) {
     case "Premium":
-      basketImageSrc = "path_to_premium_basket_image.svg";
+      basketImageSrc = premiumBasket;
       break;
     case "Standard":
       basketImageSrc = "path_to_standard_basket_image.svg";

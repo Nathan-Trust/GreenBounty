@@ -11,7 +11,7 @@ export const WalletSkeleton: React.FC<WalletSkeletonProps> = ({
   children,
 }) => {
   const renderSkeletonRows = Array.from({ length }).map((_, index) => (
-    <div key={index} className="p-6 rounded-lg flex gap-3 bg-gray-100">
+    <div key={index} className="p-4 rounded-lg flex gap-3 border">
       <Skeleton className="w-16 h-16 rounded-md" /> {/* Avatar skeleton */}
       <div className="flex flex-col gap-2">
         <Skeleton className="w-20 h-4" /> {/* Account number skeleton */}

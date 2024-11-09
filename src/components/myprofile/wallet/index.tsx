@@ -23,22 +23,6 @@ const Wallet: React.FC = () => {
   return (
     <div className="">
       <Card className="border-none shadow-none bg-transparent">
-        {/* <CardHeader>
-          <CardTitle className="flex justify-between items-center">
-            <p className="font-semibold">Withdrawal Accounts</p>
-            <CustomDialog
-              open={open}
-              onOpenChange={() => setOpen(!open)}
-              triggerComponent={
-                <Button className="bg-[#F65E00EA] hover:bg-[#F65E00EA] mt-2 text-[#FFFFFF] px-8 shadow-none border-none outline-none focus:ring-0">
-                  Add Withdrawal Account
-                </Button>
-              }
-            >
-              <AddWithdrawalAccount setOpen={setOpen} />
-            </CustomDialog>
-          </CardTitle>
-        </CardHeader> */}
         <CardHeader className="p-0 pb-6 md:p-6">
           <CardTitle>Payment Information</CardTitle>
           <CardDescription>
@@ -51,7 +35,7 @@ const Wallet: React.FC = () => {
             <p>Manage your default currency</p>
           </div>
           <div className="flex items-center gap-1.5 mt-3">
-            <div className="p-2 flex flex-1 bg-[#F5F5F5] justify-between items-center gap-16 rounded-md border border-[#E5E7EB]">
+            <div className="p-2 flex flex-1 bg-[#F5F5F5] justify-between items-center lg:gap-16  rounded-md border border-[#E5E7EB]">
               <div className="flex items-center gap-1.5 ">
                 <Avatar className="h-8 w-8 rounded-full overflow-hidden">
                   <AvatarImage
@@ -66,7 +50,9 @@ const Wallet: React.FC = () => {
               </div>
               <div className="text-xs">
                 <p>$0.9999</p>
-                <p className="mt-0.5 hidden lg:block">1USD = 779.92NGN</p>
+                <p className="mt-0.5 hidden md:block whitespace-nowrap">
+                  1 EcoCoin = 0.009USD
+                </p>
               </div>
             </div>
             <Button size="sm">Update</Button>
