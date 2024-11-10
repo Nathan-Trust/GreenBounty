@@ -33,3 +33,30 @@ export const AddWithdrawalAccountFormSchema = z.object({
 });
 
 export type AddWithdrawalAccountFormSchemaType = z.infer<typeof AddWithdrawalAccountFormSchema>
+
+
+
+export const WithdrawFormSchema = z.object({
+  // Step 1 fields
+  card: z.string().min(1, "Card selection is required"),
+
+  // Step 2 fields
+  amount: z
+    .string()
+    .regex(/^\d+$/, "Amount must be a valid number")
+    .refine((val) => parseInt(val) > 0, {
+      message: "Amount must be a positive number",
+    })
+    .refine((val) => parseInt(val) >= 1, {
+      message: "Minimum amount should be 1",
+    }),
+  description: z
+    .string()
+    .min(1, "Description is required")
+    .max(500, "Description should not exceed 500 characters"),
+});
+
+
+export type WithdrawFormSchemaType = z.infer<
+  typeof WithdrawFormSchema
+>;

@@ -16,3 +16,14 @@ export const maskAccountNumber = (accountNumber: string) => {
   if (accountNumber.length < 5) return accountNumber; // handle short account numbers
   return `${accountNumber.slice(0, 2)} *** *** ${accountNumber.slice(-3)}`;
 };
+
+
+export const formatAccountNumber = (accountNumber: string) => {
+  if (!accountNumber) return "";
+
+  // Pad the number with leading zeros to ensure it's 11 digits
+  const paddedNumber = accountNumber.padStart(11, "0");
+
+  // Format as `XXX XXXX XXXX`
+  return paddedNumber.replace(/(\d{3})(\d{4})(\d{4})/, "$1 $2 $3");
+};

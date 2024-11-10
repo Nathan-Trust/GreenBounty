@@ -87,17 +87,12 @@ const RewardsClient = () => {
     }
   };
 
-const handleOpenDialog = (type: keyof typeof dialogOpen) => {
-  if ((accounts?.data?.length ?? 0) === 0) {
-    setDialogOpen((prev) => ({ ...prev, [type]: false, addAccount: true }));
-    setLastDialog(type);
-  } else {
-  setDialogOpen((prev) => ({
-    ...prev,
-    [type]: !prev[type], // Toggle the value of dialogOpen[type]
-  }));  }
-};
-
+  const handleOpenDialog = (type: keyof typeof dialogOpen) => {
+    setDialogOpen((prev) => ({
+      ...prev,
+      [type]: !prev[type], // Toggle the value of dialogOpen[type]
+    }));
+  };
 
   return (
     <div className="grid grid-cols-12 p-1.5 mini-md:p-6 max-w-screen-lg mx-auto gap-4 mini-md:gap-6">
