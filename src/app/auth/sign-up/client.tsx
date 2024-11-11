@@ -32,7 +32,7 @@ import { z } from "zod";
 
 const SignUpClientPage = () => {
   const [searchParams] = useSearchParams();
-  const referralCode = searchParams.get("referralCode");
+  const referralCode = searchParams.get("refCode");
   const [isPasswordVisible, setIsPasswordVisible] = useState({
     password: false,
   });

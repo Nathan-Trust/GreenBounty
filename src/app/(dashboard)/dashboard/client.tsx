@@ -38,7 +38,7 @@ const DashboardClient = () => {
               {showBalance ? `$${userData?.wallet}` : "***********"}
             </p>
             <div className="flex justify-between items-center">
-              <p>{truncateText(userData?.name.toUpperCase() ?? "", 20)}</p>
+              <p>{truncateText(userData?.name?.toUpperCase() ?? "", 20)}</p>
               <div className="relative h-20 w-[105px]">
                 <div className="absolute w-16 h-16 rounded-full z-10 bg-[#93B77C]" />
                 <div className="absolute w-16 h-16 z-20 rounded-full left-10 bg-[#7CAB5CA6]" />

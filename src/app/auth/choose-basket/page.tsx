@@ -18,22 +18,23 @@ import { errorToast } from "@/utils/toast";
 import { ApiError } from "@/models/serviceRequest";
 import LoadingDots from "@/components/shared/LoadingDots";
 import useMetaTagUpdater, { useTitleUpdater } from "@/utils/meta";
+import { capitalizeFirst } from "@/utils/text";
 
 type Basket = {
-  name: "Standard" | "Premium";
+  name: "STANDARD" | "PREMIUM";
   description: string;
   image: string;
 };
 
 const baskets: Basket[] = [
   {
-    name: "Premium",
+    name: "PREMIUM",
     description:
       "This is a bigger basket for dedicated recyclers (possible in-app purchase options).",
     image: premiumBasket,
   },
   {
-    name: "Standard",
+    name: "STANDARD",
     description: "This is a smaller basket for casual recyclers.",
     image: standardBasket,
   },
@@ -57,7 +58,7 @@ const ChooseBasketForm = () => {
       ],
     });
   const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState<"Premium" | "Standard" | null>(null);
+  const [selected, setSelected] = useState<"PREMIUM" | "STANDARD" | null>(null);
   const { saveUserData } = useStore();
   const location = useLocation();
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const ChooseBasketForm = () => {
     }
   }, [fromSignIn, navigate]);
 
-  const onSubmit = (data: "Standard" | "Premium") => {
+  const onSubmit = (data: "STANDARD" | "PREMIUM") => {
     try {
       setLoading(true);
       const res = AuthService.chooseBasket(data);
@@ -113,7 +114,9 @@ const ChooseBasketForm = () => {
                   <AvatarImage src={basket.image} />
                 </Avatar>
                 <div className="ml-1">
-                  <p className="text-md font-medium">{basket.name} basket</p>
+                  <p className="text-md font-medium capitalize">
+                    {capitalizeFirst(basket.name)} basket
+                  </p>
                   <p className="text-xs">{basket.description}</p>
                 </div>
               </div>

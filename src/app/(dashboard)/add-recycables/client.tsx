@@ -15,7 +15,7 @@ const AddRecycablesClient = () => {
 
   // Define which items should have the "bg-primary" class based on basketType
   const itemsWithBgPrimary =
-    basketType === "PREMIUM"
+    basketType === "Premium"
       ? recyclableItems
       : ["Plastics", "Nylons", "Bottles"];
 
@@ -35,8 +35,8 @@ const AddRecycablesClient = () => {
     <div className="p-1.5 mini-md:p-6 max-w-screen-lg mx-auto gap-4 mini-md:gap-6">
       <p className="capitalize text-lg">{basketType} basket</p>
       <div className="mt-2">
-        <div className="bg-[#d6e1cf] h-72 md:w-80 rounded-lg">
-          <Avatar className="w-full h-full object-cover">
+        <div className="bg-[#d6e1cf] h-60 md:w-80 rounded-lg flex items-center justify-center">
+          <Avatar className="w-44 h-44 object-cover">
             <AvatarImage src={basketImageSrc} />
           </Avatar>
         </div>

@@ -80,9 +80,9 @@ export class AuthService {
 
   // choose basket
   public static async chooseBasket(
-    data: "Standard" | "Premium"
+    data: "STANDARD" | "PREMIUM"
   ): Promise<{ success: boolean; data: User; message: string | null }> {
-    const response = await axiosInstance.patch("/user/basket", { plan: data });
+    const response = await axiosInstance.post("/basket", { plan: data });
     return response.data;
   }
 }

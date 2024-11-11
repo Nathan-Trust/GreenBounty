@@ -26,6 +26,7 @@ import { useStore } from "@/store/user";
 import { Camera } from "lucide-react";
 import { useUpdateUser } from "@/hooks/updateUser";
 import { logger } from "@/utils/logger";
+import useCopyToClipboard from "@/hooks/useCopyToClipboard";
 
 const MyProfileDetails = () => {
   const { userData } = useStore();
@@ -43,6 +44,7 @@ const MyProfileDetails = () => {
 
   const referralCode = userData?.referralCode ?? "";
   const [isNameEditable, setIsNameEditable] = useState(false);
+  const { copyToClipboard } = useCopyToClipboard();
 
   // Use the custom hook to update user details
   const { mutateAsync: updateUser, isPending } = useUpdateUser();
@@ -57,19 +59,17 @@ const MyProfileDetails = () => {
   };
 
   const handleCopyCode = () => {
-    navigator.clipboard.writeText(referralCode);
-    alert("Referral code copied!");
+    copyToClipboard(`https://green-bounty.vercel.app/auth/sign-up?refCode=${referralCode}`);
   };
 
-    const handleDiscardChanges = () => {
-      // Reset the form to its default values
-      form.reset({
-        name: userData?.name ?? "",
-        photo: userData?.profilePhoto ?? Constants.defaultAvatar, // Reset photo to its original value
-      });
-      setProfilePhoto(userData?.profilePhoto ?? Constants.defaultAvatar); // Reset photo in the state
-    };
-
+  const handleDiscardChanges = () => {
+    // Reset the form to its default values
+    form.reset({
+      name: userData?.name ?? "",
+      photo: userData?.profilePhoto ?? Constants.defaultAvatar, // Reset photo to its original value
+    });
+    setProfilePhoto(userData?.profilePhoto ?? Constants.defaultAvatar); // Reset photo in the state
+  };
 
   const onSubmit = async (values: z.infer<typeof MyProfileFormSchema>) => {
     try {

@@ -9,6 +9,9 @@ import { decrypt } from "@/services/encryption";
 import { Button } from "@/components/ui/button";
 import { useStore } from "@/store/user";
 import { motion } from "framer-motion";
+import { useFetchMe } from "@/hooks/useCurrentUser";
+import { useQueryClient } from "@tanstack/react-query";
+import { QueryKeys } from "@/models/query";
 
 const Layout = () => {
   const { active } = useProviderContext();
@@ -17,7 +20,9 @@ const Layout = () => {
   const navigate = useNavigate();
   const token = Cookies.get("token");
   const user = token ? decrypt(token) : null;
-  const { userData } = useStore();
+  const { userData, saveUserData } = useStore();
+  const { data } = useFetchMe();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -49,6 +54,15 @@ const Layout = () => {
       navigate(Green_Bounty_Routes.signIn, { replace: true });
     }
   }, [navigate, user]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      queryClient.invalidateQueries({ queryKey: [QueryKeys.Get_Current_User] });
+      saveUserData(data);
+    }, 10000);
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, [queryClient]);
 
   return (
     <div className="overflow-hidden flex h-screen font-poppins">
