@@ -93,15 +93,10 @@ export class AuthService {
   }
 
   // Get Transaction Details (with both trxref and reference)
-  public static async getTransactionDetails(
-    trxref: string,
-    reference: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ): Promise<any> {
+  public static async getTransactionDetails(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Promise<any> {
     try {
-      const response = await axiosInstance.get(`/transaction/details`, {
-        params: { trxref, reference },
-      });
+      const response = await axiosInstance.get(`/transactions`);
       return response.data;
     } catch (error) {
       logger("Error fetching transaction details:", error);

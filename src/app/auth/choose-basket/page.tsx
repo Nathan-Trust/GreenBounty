@@ -19,6 +19,7 @@ import LoadingDots from "@/components/shared/LoadingDots";
 import useMetaTagUpdater, { useTitleUpdater } from "@/utils/meta";
 import { capitalizeFirst } from "@/utils/text";
 import { logger } from "@/utils/logger";
+import TransactionReceipt from "@/components/choose-basket/checkout";
 
 type Basket = {
   name: "STANDARD" | "PREMIUM";
@@ -58,17 +59,19 @@ const ChooseBasketForm = () => {
     ],
   });
 
+ 
+
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<"PREMIUM" | "STANDARD" | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  // const fromSignIn = location.state?.fromSignIn;
+  const fromSignIn = location.state?.fromSignIn;
 
-  // useEffect(() => {
-  //   if (!fromSignIn) {
-  //     navigate(Green_Bounty_Routes.signIn, { replace: true });
-  //   }
-  // }, [fromSignIn, navigate]);
+  useEffect(() => {
+    if (!fromSignIn) {
+      navigate(Green_Bounty_Routes.signIn, { replace: true });
+    }
+  }, [fromSignIn, navigate]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [transactionDetails, setTransactionDetails] = useState<any>(null);
@@ -84,10 +87,7 @@ const ChooseBasketForm = () => {
       if (trxref && reference) {
         try {
           setLoading(true);
-          const details = await AuthService.getTransactionDetails(
-            trxref,
-            reference
-          ); // Replace with the actual method to fetch details
+          const details = await AuthService.getTransactionDetails(); 
           setTransactionDetails(details);
         } catch (error) {
           logger("Error fetching transaction details:", error);
@@ -105,6 +105,8 @@ const ChooseBasketForm = () => {
       const res = await AuthService.chooseBasket(data);
       if (data === "PREMIUM" && res.data) {
         window.location.href = res.data;
+      } else {
+        navigate(Green_Bounty_Routes.dashboard)
       }
     } catch (err) {
       errorToast({
@@ -115,43 +117,15 @@ const ChooseBasketForm = () => {
       });
     } finally {
       setLoading(false);
-      setSelected(null)
+      setSelected(null);
     }
-  };
-
-  // Function to display the receipt
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const displayReceipt = (transactionDetails: any) => {
-    if (!transactionDetails) return null;
-
-    return (
-      <div>
-        <h2>Transaction Receipt</h2>
-        <p>
-          <strong>Transaction ID:</strong> {transactionDetails.trxref}
-        </p>
-        <p>
-          <strong>Reference:</strong> {transactionDetails.reference}
-        </p>
-        <p>
-          <strong>Status:</strong> {transactionDetails.status}
-        </p>
-        <p>
-          <strong>Amount:</strong> {transactionDetails.amount}
-        </p>
-        <p>
-          <strong>Message:</strong> {transactionDetails.message}
-        </p>
-        <p>
-          <strong>Response:</strong> {transactionDetails.response}
-        </p>
-      </div>
-    );
   };
 
   // Display the transaction receipt or loading state
   const renderReceipt = transactionDetails ? (
-    displayReceipt(transactionDetails)
+    <TransactionReceipt
+      transactionDetails={transactionDetails}
+    />
   ) : (
     <LoadingDots />
   );
@@ -161,7 +135,7 @@ const ChooseBasketForm = () => {
       <Card className="max-w-[450px] mx-auto border-none shadow-none outline-none">
         {/* Conditional rendering based on whether transactionDetails is present */}
         {transactionDetails ? (
-          <CardContent className="space-y-5">
+          <CardContent className="space-y-5 border rounded-tl-md rounded-tr-md w-[400px] py-4">
             {renderReceipt}
             <Button
               disabled={loading}
