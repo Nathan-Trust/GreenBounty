@@ -9,6 +9,12 @@ import {
 } from "@/schema/auth";
 import { User } from "./user";
 
+type BasketResponse = {
+  success: boolean;
+  data: string;
+  message: string | null;
+};
+
 export class AuthService {
   // Login
   static async login(email: string, password: string): Promise<User> {
@@ -81,8 +87,25 @@ export class AuthService {
   // choose basket
   public static async chooseBasket(
     data: "STANDARD" | "PREMIUM"
-  ): Promise<{ success: boolean; data: User; message: string | null }> {
+  ): Promise<BasketResponse> {
     const response = await axiosInstance.post("/basket", { plan: data });
     return response.data;
+  }
+
+  // Get Transaction Details (with both trxref and reference)
+  public static async getTransactionDetails(
+    trxref: string,
+    reference: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): Promise<any> {
+    try {
+      const response = await axiosInstance.get(`/transaction/details`, {
+        params: { trxref, reference },
+      });
+      return response.data;
+    } catch (error) {
+      logger("Error fetching transaction details:", error);
+      throw error;
+    }
   }
 }

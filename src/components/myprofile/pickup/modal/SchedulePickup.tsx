@@ -235,7 +235,7 @@ const SchedulePickup = () => {
             render={() => (
               <FormItem>
                 <FormLabel>Waste Type</FormLabel>
-                <div className="flex gap-2 mt-2 items-center border px-3 h-10">
+                <div className="flex gap-2 mt-2 items-center border overflow-x-auto px-3 h-10">
                   {selectedItems.map((item) => (
                     <div
                       key={item}
@@ -256,7 +256,7 @@ const SchedulePickup = () => {
           />
 
           {/* Recyclable Items List */}
-          <div className="flex gap-x-1 gap-y-1 mt-4 lg:w-1/2 flex-wrap">
+          <div className="flex gap-x-1 gap-y-1 mt-4  flex-wrap">
             {recyclableItems.map((item) => (
               <Button
                 key={item}

@@ -26,7 +26,6 @@ export class UserService {
   static async getCurrentUser(): Promise<User> {
     const response = await axiosInstance.get(APIs.getCurrentUser.url as string);
     const user = response.data.data;
-    console.log("user", user);
     return user;
   }
 
