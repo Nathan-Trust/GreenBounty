@@ -2,7 +2,7 @@ export const queryText = (message: string) => `Failed to fetch ${message}`;
 
 export class QueryKeys {
   // User
-  static readonly Get_Current_User = "get_current_user";
+  static  Get_Current_User = "get_current_user";
   // Projects
   static readonly Get_All_Projects = "Get_All_Projects";
   static readonly Get_Project_By_Id = "Get_Project_By_Id";

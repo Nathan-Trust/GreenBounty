@@ -121,3 +121,18 @@ export const formatText = (text: string): string => {
     .replace(/([A-Z])/g, (match) => ' ' + match.toLowerCase()) // Convert remaining capital letters to lowercase
     .trim(); // Remove leading space, if any
 };
+
+/**
+ * Capitalizes the first letter of a string and converts the rest to lowercase.
+ * 
+ * @param {string} text - The string to format.
+ * @returns {string} - The formatted string with the first letter capitalized and the rest lowercase.
+ * 
+ * @example
+ * capitalizeFirst("PREMIUM"); // Returns "Premium"
+ * capitalizeFirst("hello");   // Returns "Hello"
+ */
+export function capitalizeFirst(text:string) {
+  if (!text) return "";
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}

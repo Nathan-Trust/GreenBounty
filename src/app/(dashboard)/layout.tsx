@@ -9,6 +9,8 @@ import { decrypt } from "@/services/encryption";
 import { Button } from "@/components/ui/button";
 import { useStore } from "@/store/user";
 import { motion } from "framer-motion";
+import { useQueryClient } from "@tanstack/react-query";
+import { QueryKeys } from "@/models/query";
 
 const Layout = () => {
   const { active } = useProviderContext();
@@ -18,6 +20,7 @@ const Layout = () => {
   const token = Cookies.get("token");
   const user = token ? decrypt(token) : null;
   const { userData } = useStore();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -49,6 +52,18 @@ const Layout = () => {
       navigate(Green_Bounty_Routes.signIn, { replace: true });
     }
   }, [navigate, user]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [QueryKeys.Get_Current_User],
+      });
+    };
+
+    const intervalId = setInterval(fetchData, 10000);
+
+    return () => clearInterval(intervalId);
+  }, [queryClient]);
 
   return (
     <div className="overflow-hidden flex h-screen font-poppins">

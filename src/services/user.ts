@@ -1,7 +1,6 @@
 import axiosInstance from "@/api/axiosInstance";
 import { APIs } from "./API";
 
-
 export type User = {
   _id: string;
   name: string;
@@ -27,16 +26,15 @@ export class UserService {
   static async getCurrentUser(): Promise<User> {
     const response = await axiosInstance.get(APIs.getCurrentUser.url as string);
     const user = response.data.data;
-
     return user;
   }
 
- /**
+  /**
    * Updates the user profile with form data, including name and photo.
    * @param payload - FormData containing the fields to update.
    * @returns A promise that resolves to the updated user.
    */
- static async updateUser(payload: FormData): Promise<User> {
+  static async updateUser(payload: FormData): Promise<User> {
     const response = await axiosInstance.patch("/user/profile", payload, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -45,6 +43,4 @@ export class UserService {
     const user = response.data.data;
     return user;
   }
-
-  
 }
