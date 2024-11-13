@@ -6,7 +6,6 @@ import ErrorPage from "@/error/page";
 import { Green_Bounty_Routes } from "@/store/route";
 import { createBrowserRouter } from "react-router-dom";
 import LandingPageLayout from "@/app/(landing-page)/layout";
-import AboutPage from "@/app/(landing-page)/about/page";
 import { SignupAuthLayout } from "@/app/auth/layout";
 import SignUpPage from "@/app/auth/sign-up/page";
 import VerifyOtpPage from "@/app/auth/verify-otp/page";
@@ -27,10 +26,6 @@ export const router = createBrowserRouter([
       {
         path: Green_Bounty_Routes.home,
         element: <Home />,
-      },
-      {
-        path: Green_Bounty_Routes.about,
-        element: <AboutPage />,
       },
       {
         path: Green_Bounty_Routes.privacyPolicy,

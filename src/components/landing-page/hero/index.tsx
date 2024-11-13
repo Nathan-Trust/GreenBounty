@@ -15,7 +15,7 @@ const HeroSection = () => {
     const navigate = useNavigate();
 
   return (
-    <div className="w-full flex flex-col screen-max-width pb-20">
+    <div id="home" className="w-full flex flex-col screen-max-width pb-7">
       <div className="flex flex-col-reverse md:flex-row justify-between items-center z-20">
         <div className="px-4 lg:px-0">
           <motion.h2

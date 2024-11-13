@@ -13,7 +13,7 @@ const fadeInVariants = {
 const CommitmentSection = () => {
   const navigate = useNavigate()
   return (
-    <div className="h-fit bg-[#d3d3d3] w-full">
+    <div  className="h-fit bg-[#d3d3d3] w-full">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between screen-max-width px-4 py-5 lg:px-0">
         <img src={commitmentImg} alt="commitment" className="md:w-[40%]" />
         <div className="lg:w-1/2 flex items-center justify-center">
@@ -38,7 +38,10 @@ const CommitmentSection = () => {
               a circular economy and reduces waste through innovative recycling
               solutions.
             </motion.p>
-            <Button className="w-full md:w-fit mt-3" onClick={() => navigate(Green_Bounty_Routes.signUp)}>
+            <Button
+              className="w-full md:w-fit mt-3"
+              onClick={() => navigate(Green_Bounty_Routes.signUp)}
+            >
               Join GreenBounty Now
             </Button>
           </div>

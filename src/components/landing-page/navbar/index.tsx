@@ -1,21 +1,36 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react"; // Importing Menu and X icons from lucide-react
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import greenbountyLogo from "../../../assets/landing-page/greenbountylogo.png";
+import { HashLink } from "react-router-hash-link";
+import { Green_Bounty_Routes } from "@/store/route";
+
 
 // Dummy menu data
-const menuData = [
-  { title: "Home", url: "/" },
-  { title: "About", url: "/about" },
-  { title: "Services", url: "/services" },
+const baseMenuData = [
+  { title: "Home", url: "#home" },
+  { title: "About", url: "#about-us" },
+  { title: "Services", url: "#services" },
 ];
+
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate()
+
+
+    const isHomePage = location.pathname === "/";
+
+    // Conditionally modify menu data based on the current path
+    const menuData = baseMenuData.map((item) => ({
+      ...item,
+      url: isHomePage ? item.url : `/${item.url}`,
+    }));
+
 
   // Scroll listener to change navbar style
   useEffect(() => {
@@ -52,11 +67,14 @@ const Navbar = () => {
       >
         <div className="flex justify-between screen-max-width mx-auto items-center">
           {/* Logo */}
-          <div className="text-lg flex items-center font-bold text-black">
+          <div
+            onClick={() => navigate(Green_Bounty_Routes.home)}
+            className="text-lg flex cursor-pointer items-center font-bold text-black"
+          >
             <img
               src={greenbountyLogo}
               alt="Green Bounty Logo"
-              className={`${scrolled ? "h-8" : "w-14 object-contain"}`}
+              className={` ${scrolled ? "h-8" : "w-14 object-contain"}`}
             />
             <p>GreenBounty</p>
           </div>
@@ -83,16 +101,32 @@ const Navbar = () => {
             <ul className="flex space-x-8 items-center">
               {menuData.map((item, index) => (
                 <li key={index}>
-                  <Link
-                    to={item.url}
-                    className={`font-semibold text-lg group hover:text-gray-500 relative ${
-                      location.pathname === item.url
-                        ? "text-green-500"
-                        : "text-black"
-                    }`}
-                  >
-                    {item.title}
-                  </Link>
+                  {item.url.startsWith("#") ? (
+                    <HashLink
+                      smooth
+                      to={item.url}
+                      className={`font-semibold text-lg group hover:text-gray-500 relative ${
+                        location.hash === item.url
+                          ? "text-green-500"
+                          : "text-black"
+                      }`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.title}
+                    </HashLink>
+                  ) : (
+                    <Link
+                      to={item.url}
+                      className={`font-semibold text-lg group hover:text-gray-500 relative ${
+                        location.pathname === item.url
+                          ? "text-green-500"
+                          : "text-black"
+                      }`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.title}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -132,24 +166,29 @@ const Navbar = () => {
               </motion.div>
 
               <div className="mt-10 space-y-6">
-                {menuData.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Link
-                      to={item.url}
-                      className="relative block font-semibold text-lg text-gray-800 hover:text-white
-                   hover:bg-[#548235] px-4 py-2 rounded-lg transition-all duration-300"
-                      onClick={() => setIsMenuOpen(false)}
+                {menuData.map((item, index) => {
+                  const LinkComponent = item.url.startsWith("#")
+                    ? HashLink
+                    : Link;
+
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
                     >
-                      <span className="absolute inset-0 w-full h-full transform scale-x-0 origin-left bg-[#548235] transition-transform duration-500 ease-out group-hover:scale-x-100"></span>
-                      <span className="relative">{item.title}</span>
-                    </Link>
-                  </motion.div>
-                ))}
+                      <LinkComponent
+                        to={item.url}
+                        className="relative block font-semibold text-lg text-gray-800 hover:text-white hover:bg-[#548235] px-4 py-2 rounded-lg transition-all duration-300"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <span className="absolute inset-0 w-full h-full transform scale-x-0 origin-left bg-[#548235] transition-transform duration-500 ease-out group-hover:scale-x-100"></span>
+                        <span className="relative">{item.title}</span>
+                      </LinkComponent>
+                    </motion.div>
+                  );
+                })}
               </div>
 
               {/* Call-to-Action Button */}

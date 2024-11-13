@@ -1,60 +1,78 @@
-import aboutImg from "../../../assets/landing-page/image 9.png";
-import aboutImgTwo from "../../../assets/landing-page/image 10.png";
+import { motion, AnimatePresence } from "framer-motion";
 
 const About = () => {
-  return (
-    <div
-      className=" w-full pt-8"
-      style={{
-        background:
-          "linear-gradient(135deg, #4a4848 20%, #120f0f 70%, #120f0f)",
-      }}
-    >
-      <div className="max-w-[1100px] text-white mx-auto">
-        {/* First Section */}
-        <div className="flex flex-col md:flex-row items-center">
-          <div className="w-full md:w-1/2 py-12 relative flex justify-center mb-6 md:mb-0">
-            <img
-              src={aboutImg}
-              alt="about description"
-              className=":w-[150px] h-[150px] lg:w-[300px] lg:h-[300px] shadow-lg shadow-[#D9D9D9] rounded-full relative z-10"
-            />
-          </div>
-          <div className="w-full md:w-1/2 px-4 text-white ">
-            <p className="text-lg font-semibold mb-2">Did you know?</p>
-            <p className="text-xs leading-loose mb-4 mt-3">
-              Drowsy driving is one of the leading causes of road accidents
-              worldwide. Whether you’re managing a commercial fleet or driving
-              your family, fatigue behind the wheel can have devastating
-              consequences.
-            </p>
-          </div>
-        </div>
+  // Array of items to display
+  const items = [
+    {
+      id: 1,
+      bgColor: "bg-gray-200",
+      title: "Reliable Quality",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptate est ea magnam consequuntur nisi ullam neque optio, illum atqu",
+    },
+    {
+      id: 2,
+      bgColor: "bg-primary/20",
+      title: "Trusted Expertise",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptate est ea magnam consequuntur nisi ullam neque optio, illum atqu",
+    },
+    {
+      id: 3,
+      bgColor: "bg-[#fdeef2]",
+      title: "Sustainable Impact",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptate est ea magnam consequuntur nisi ullam neque optio, illum atqu",
+    },
+    {
+      id: 4,
+      bgColor: "bg-[#daedf7]",
+      title: "Community Engagement",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptate est ea magnam consequuntur nisi ullam neque optio, illum atqu",
+    },
+  ];
 
-        {/* Second Section */}
-        <div className="flex flex-col md:flex-row justify-between mt-12 lg:mt-0">
-          <div className="w-full md:w-1/2 px-4 mb-6 ">
-            <p className="text-lg font-semibold mb-2">Meet DrowsyGuard</p>
-            <p className="text-xs leading-loose mb-4">
-              Our state-of-the-art software uses artificial intelligence to
-              monitor driver fatigue in real-time. It tracks physical indicators
-              like eye movements, facial expressions, and more to detect early
-              signs of drowsiness—and immediately alerts the driver to prevent
-              accidents.
-            </p>
-            <ul className="list-disc list-inside mb-4 text-xs space-y-2">
-              <li>Non-intrusive and easy to install</li>
-              <li>Highly accurate, AI-driven detection</li>
-              <li>Real-time alerts for immediate response</li>
-              <li>Works for both personal and commercial vehicles</li>
-            </ul>
+  // Define animation variants for staggered appearance
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (index: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: index * 0.5, duration: 0.8 },
+    }),
+  };
+
+  return (
+    <div className="bg-[#fdfefd]">
+      <div id="about-us" className="screen-max-width px-4  py-5 md:py-16 gap-4">
+        <div className="flex flex-col lg:flex-row lg:justify-between">
+          <div className="w-fit">
+            <p>ABOUT GREENBOUNTY</p>
+            <p className="text-xl font-semibold">About Us</p>
           </div>
-          <div className="flex justify-center self-end">
-            <img
-              src={aboutImgTwo}
-              alt="about description"
-              className=" h-[250px]"
-            />
+          <div className="lg:w-[62%] mt-8 lg:mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+              <AnimatePresence>
+                {items.map((item, index) => (
+                  <motion.div
+                    key={item.id}
+                    className="flex flex-col items-start"
+                    custom={index}
+                    variants={itemVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    exit="hidden"
+                  >
+                    <div className={`w-16 h-16 rounded-md ${item.bgColor}`} />
+                    <p className="text-md font-medium mt-1.5">{item.title}</p>
+                    <p className="text-sm leading-relaxed">
+                      {item.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
