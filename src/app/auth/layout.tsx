@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "react-router-dom"; // Example for another background image
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"; // Example for another background image
 import { useEffect } from "react";
 import { Green_Bounty_Routes } from "@/store/route";
 
@@ -17,6 +17,7 @@ type BackgroundImages = {
 };
 
 export const SignupAuthLayout: React.FC = () => {
+  const navigate = useNavigate()
   const { pathname } = useLocation();
 
   // Map routes to specific background images
@@ -45,6 +46,7 @@ export const SignupAuthLayout: React.FC = () => {
           src={selectedBackground}
           alt="background-image"
           className="w-full h-full object-cover"
+          onClick={ () => navigate(Green_Bounty_Routes.home)}
         />
       </div>
 

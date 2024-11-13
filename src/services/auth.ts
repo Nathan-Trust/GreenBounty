@@ -8,14 +8,62 @@ import {
   ChangePasswordSchemaType,
 } from "@/schema/auth";
 import { User } from "./user";
+import { JoinWaitlistSchemaType } from "@/schema/join-waitlist";
 
-type BasketResponse = {
+
+type WaitListResponse = {
   success: boolean;
-  data: string;
-  message: string | null;
+  data: {
+    name: string;
+    email: string;
+    isDeleted: boolean;
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+  message: string;
 };
 
+interface TransactionDetails {
+  _id: string;
+  user: User;
+  basket: {
+    _id: string;
+    user: string;
+    plan: string;
+    isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+  type: string;
+  description: string;
+  totalAmount: number;
+  paymentMethod: string;
+  status: string;
+  reference: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface TransactionApiResponse {
+  success: boolean;
+  data: TransactionDetails;
+  message: string | null;
+}
+
+
+
 export class AuthService {
+  // waitlist
+  static async joinWaitlist(
+    data: JoinWaitlistSchemaType
+  ): Promise<WaitListResponse> {
+    const response = await axiosInstance.post("/waitlist", data);
+    return response.data;
+  }
   // Login
   static async login(email: string, password: string): Promise<User> {
     const response = await axiosInstance.post(APIs.login.url as string, {
@@ -85,22 +133,5 @@ export class AuthService {
   }
 
   // choose basket
-  public static async chooseBasket(
-    data: "STANDARD" | "PREMIUM"
-  ): Promise<BasketResponse> {
-    const response = await axiosInstance.post("/basket", { plan: data });
-    return response.data;
-  }
-
-  // Get Transaction Details (with both trxref and reference)
-  public static async getTransactionDetails(): // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Promise<any> {
-    try {
-      const response = await axiosInstance.get(`/transactions`);
-      return response.data;
-    } catch (error) {
-      logger("Error fetching transaction details:", error);
-      throw error;
-    }
-  }
+ 
 }

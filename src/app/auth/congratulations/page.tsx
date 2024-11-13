@@ -65,11 +65,14 @@ const CongratulationsPage = () => {
       </CardHeader>
       <CardContent>
         <Button
-          type="submit"
-          onClick={() => navigate(Green_Bounty_Routes.signIn)}
+          onClick={() =>
+            navigate(Green_Bounty_Routes.chooseBasket, {
+              state: { fromSignIn: true },
+            })
+          }
           className="w-full"
         >
-          Proceed to Dashboard{" "}
+          Proceed to Choose Basket{" "}
         </Button>
       </CardContent>
     </Card>

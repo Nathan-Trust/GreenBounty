@@ -1,11 +1,7 @@
 import React from "react";
 import Lottie from "react-lottie";
-import animationData from "../../assets/lotties/tick2.json"
-
-type TransactionReceiptProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  transactionDetails: any;
-};
+import animationData from "../../assets/lotties/tick2.json";
+import { useBasketStore } from "@/store/basket"; // Import the Zustand store
 
 const defaultOptions = {
   loop: true,
@@ -16,9 +12,9 @@ const defaultOptions = {
   },
 };
 
-const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
-  transactionDetails,
-}) => {
+const TransactionReceipt: React.FC = () => {
+  const { transactionDetails } = useBasketStore();
+
   if (!transactionDetails) return null;
 
   return (
@@ -29,17 +25,17 @@ const TransactionReceipt: React.FC<TransactionReceiptProps> = ({
       <p className="text-center text-xl mt-3 font-medium">Payment Success</p>
       <h2 className="mt-5">Transaction Receipt</h2>
       <p>
-        <strong>Transaction ID:</strong> {transactionDetails.trxref}
+        <strong>Transaction ID:</strong> {transactionDetails?._id}
       </p>
       <p>
-        <strong>Reference:</strong> {transactionDetails.reference}
+        <strong>Reference:</strong> {transactionDetails?.reference}
       </p>
       <div className="border border-dashed my-3" />
       <p>
-        <strong>Status:</strong> {transactionDetails.status}
+        <strong>Status:</strong> {transactionDetails?.status}
       </p>
       <p>
-        <strong>Amount:</strong> {transactionDetails.amount}
+        <strong>Amount:</strong> {transactionDetails?.totalAmount}
       </p>
       <div className="border border-dashed my-3" />
     </div>

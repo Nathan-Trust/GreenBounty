@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Green_Bounty_Routes } from "@/store/route";
-import { AuthService } from "@/services/auth";
 import { errorToast } from "@/utils/toast";
 import { ApiError } from "@/models/serviceRequest";
 import LoadingDots from "@/components/shared/LoadingDots";
@@ -20,6 +19,7 @@ import useMetaTagUpdater, { useTitleUpdater } from "@/utils/meta";
 import { capitalizeFirst } from "@/utils/text";
 import { logger } from "@/utils/logger";
 import TransactionReceipt from "@/components/choose-basket/checkout";
+import { useBasketStore } from "@/store/basket";
 
 type Basket = {
   name: "STANDARD" | "PREMIUM";
@@ -59,12 +59,15 @@ const ChooseBasketForm = () => {
     ],
   });
 
- 
-
-  const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<"PREMIUM" | "STANDARD" | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const {
+    chooseBasket,
+    processBasketPayment,
+    transactionDetails,
+    loading,
+  } = useBasketStore();
   const fromSignIn = location.state?.fromSignIn;
 
   useEffect(() => {
@@ -73,9 +76,6 @@ const ChooseBasketForm = () => {
     }
   }, [fromSignIn, navigate]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [transactionDetails, setTransactionDetails] = useState<any>(null);
-
   // Extract trxref and reference from search params
   const searchParams = new URLSearchParams(location.search);
   const trxref = searchParams.get("trxref");
@@ -83,49 +83,45 @@ const ChooseBasketForm = () => {
 
   // Fetch transaction details when trxref or reference changes
   useEffect(() => {
-    const fetchTransactionDetails = async () => {
+    const fetchAndProcessTransaction = async () => {
       if (trxref && reference) {
         try {
-          setLoading(true);
-          const details = await AuthService.getTransactionDetails(); 
-          setTransactionDetails(details);
+          const [paymentResponse] = await Promise.all([processBasketPayment()]);
+          logger("Payment processed successfully:", paymentResponse);
         } catch (error) {
-          logger("Error fetching transaction details:", error);
-        } finally {
-          setLoading(false);
+          logger(
+            "Error fetching transaction details or processing payment:",
+            error
+          );
+          errorToast({
+            title: "Error",
+            message:
+              "An error occurred while processing your payment. Please try again.",
+          });
         }
       }
     };
-    fetchTransactionDetails();
+
+    fetchAndProcessTransaction();
   }, [trxref, reference]);
 
   const onSubmit = async (data: "STANDARD" | "PREMIUM") => {
     try {
-      setLoading(true);
-      const res = await AuthService.chooseBasket(data);
-      if (data === "PREMIUM" && res.data) {
-        window.location.href = res.data;
-      } else {
-        navigate(Green_Bounty_Routes.dashboard)
-      }
+      await chooseBasket(data, navigate);
     } catch (err) {
       errorToast({
         title: "Error",
         message:
           (err as ApiError)?.response?.data?.message ??
-          "An error occurred while logging in. Please try again.",
+          "An error occurred while selecting your basket. Please try again.",
       });
     } finally {
-      setLoading(false);
-      setSelected(null);
+      setSelected(null); // Reset the selected basket after the action
     }
   };
 
-  // Display the transaction receipt or loading state
   const renderReceipt = transactionDetails ? (
-    <TransactionReceipt
-      transactionDetails={transactionDetails}
-    />
+    <TransactionReceipt />
   ) : (
     <LoadingDots />
   );
@@ -180,7 +176,7 @@ const ChooseBasketForm = () => {
               })}
               <Button
                 disabled={!selected || loading}
-                onClick={() => onSubmit(selected!)}
+                onClick={() => onSubmit(selected!)} // Call the onSubmit function when a basket is selected
                 className="w-full"
               >
                 {loading ? <LoadingDots /> : "Continue"}

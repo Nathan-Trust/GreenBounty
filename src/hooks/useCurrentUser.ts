@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useFetchMe = () => {
   const { saveUserData } = useStore();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isSuccess } = useQuery({
     queryKey: [QueryKeys.Get_Current_User],
     queryFn: () => UserService.getCurrentUser(),
     meta: {
@@ -13,7 +13,10 @@ export const useFetchMe = () => {
     },
   });
 
-  saveUserData(data);
+  if (isSuccess) {
+    saveUserData(data);
+  }
+
   return {
     data,
     isLoading,
