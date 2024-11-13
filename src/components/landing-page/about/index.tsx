@@ -8,30 +8,31 @@ const About = () => {
       bgColor: "bg-gray-200",
       title: "Reliable Quality",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptate est ea magnam consequuntur nisi ullam neque optio, illum atqu",
+        "Green Bounty ensures high standards in all our products and services. Our commitment to quality means you can trust that every item is crafted with care and built to last.",
     },
     {
       id: 2,
       bgColor: "bg-primary/20",
       title: "Trusted Expertise",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptate est ea magnam consequuntur nisi ullam neque optio, illum atqu",
+        "With years of experience, Green Bounty brings trusted expertise to sustainable solutions. Our team is dedicated to guiding you with knowledge and precision for a greener future.",
     },
     {
       id: 3,
       bgColor: "bg-[#fdeef2]",
       title: "Sustainable Impact",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptate est ea magnam consequuntur nisi ullam neque optio, illum atqu",
+        "We are committed to making a positive environmental impact. Green Bounty products and practices are designed to reduce waste, conserve resources, and promote sustainability.",
     },
     {
       id: 4,
       bgColor: "bg-[#daedf7]",
       title: "Community Engagement",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptate est ea magnam consequuntur nisi ullam neque optio, illum atqu",
+        "Green Bounty believes in building strong, sustainable communities. We partner with local groups and initiatives to support environmental awareness and positive social impact.",
     },
   ];
+
 
   // Define animation variants for staggered appearance
   const itemVariants = {
