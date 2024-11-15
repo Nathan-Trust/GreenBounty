@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom"; // Import Link from React Router
+import { Link } from "react-router-dom";
 
 interface TabsProps {
   labels: string[];
@@ -8,6 +8,7 @@ interface TabsProps {
   className?: string;
   activeIndex: number;
   setActiveIndex: (index: number) => void;
+  disabledTabs?: number[]; // New prop for disabled tab indices
 }
 
 const Tabs: React.FC<TabsProps> = ({
@@ -16,6 +17,7 @@ const Tabs: React.FC<TabsProps> = ({
   className,
   activeIndex,
   setActiveIndex,
+  disabledTabs = [], // Default to an empty array if no tabs are disabled
 }) => {
   const tabRefs = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([]);
   const [underlineStyle, setUnderlineStyle] = useState({
@@ -42,6 +44,7 @@ const Tabs: React.FC<TabsProps> = ({
     >
       {labels.map((label, index) => {
         const hasLink = links[index] && links[index] !== null;
+        const isDisabled = disabledTabs.includes(index); // Check if the tab is disabled
 
         return hasLink ? (
           <Link
@@ -51,14 +54,14 @@ const Tabs: React.FC<TabsProps> = ({
                 tabRefs.current[index] = el;
               }
             }}
-            to={links[index]!}
+            to={isDisabled ? "#" : links[index]!} // Prevent navigation if disabled
             className={`relative pb-2 cursor-pointer ${
               activeIndex === index ? "" : "text-gray-500"
-            }`}
-            onClick={() => setActiveIndex(index)}
+            } ${isDisabled ? "text-gray-300 cursor-not-allowed" : ""}`} // Apply disabled styles
+            onClick={() => !isDisabled && setActiveIndex(index)} // Prevent click if disabled
           >
             <p className="whitespace-nowrap capitalize">
-              {label == "mypickup" ? "My Pickup" : label}
+              {label === "mypickup" ? "My Pickup" : label}
             </p>
           </Link>
         ) : (
@@ -71,8 +74,9 @@ const Tabs: React.FC<TabsProps> = ({
             }}
             className={`relative pb-2 cursor-pointer ${
               activeIndex === index ? "" : "text-gray-500"
-            }`}
-            onClick={() => setActiveIndex(index)}
+            } ${isDisabled ? "text-gray-300 cursor-not-allowed" : ""}`} // Apply disabled styles
+            onClick={() => !isDisabled && setActiveIndex(index)} // Prevent click if disabled
+            disabled={isDisabled} // Add disabled attribute for accessibility
           >
             <p className="whitespace-nowrap">{label}</p>
           </button>

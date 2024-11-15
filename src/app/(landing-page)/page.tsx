@@ -6,7 +6,7 @@ const Home = () => {
 
 
   return (
-    <div>
+    <div id="home">
       <Helmet>
         <title>GreenBounty</title>
         <meta

@@ -136,3 +136,17 @@ export function capitalizeFirst(text:string) {
   if (!text) return "";
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
+
+/**
+ * Converts a string with underscores into a more human-readable format by
+ * capitalizing each word and replacing underscores with spaces.
+ *
+ * @param {string} method - The string to format, typically in a snake_case format (e.g., "bank_transfer").
+ * @returns {string} - The formatted string with each word capitalized and underscores replaced by spaces (e.g., "Bank Transfer").
+ */
+export const formatPaymentMethod = (method: string): string => {
+  return method
+    .split('_') // Split the string by underscores.
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word.
+    .join(' '); // Join the words back together with spaces.
+};

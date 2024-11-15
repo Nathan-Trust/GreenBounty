@@ -1,23 +1,43 @@
 import { useStore } from "@/store/user";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { recyclableItems } from "@/store/add-recycables";
-import premiumBasket from "../../../assets/baskets/premiumBasketSvg.svg"
+import premiumBasket from "../../../assets/baskets/premiumBasketSvg.svg";
+import AddRecycablesApexLineChart, {
+  Category,
+  Duration,
+} from "@/components/add-recycables/RecycablesLineChart";
+import { DropDown } from "@/components/shared/CustomDropdown";
+import { useEffect, useState } from "react";
+import CustomSheet from "@/components/shared/CustomSheetDrawer";
+import RecycablesDrawer from "@/components/add-recycables/drawer";
+import { useRecyclablesStore } from "@/store/add-recycables";
+import { Green_Bounty_Routes } from "@/store/route";
+import { useNavigate } from "react-router-dom";
 
 const AddRecycablesClient = () => {
   const { userData } = useStore();
+  const navigate = useNavigate();
+  const { recyclables, fetchRecyclables } = useRecyclablesStore();
+  const [selectedCategory, setSelectedCategory] = useState<Category>(
+    Category.PLASTIC
+  );
+  const [selectedDuration, setSelectedDuration] = useState<Duration>(
+    Duration.Day
+  );
 
-  // Check if userData?.basket exists before applying string methods
+  useEffect(() => {
+    fetchRecyclables();
+  }, []);
+
   const basketType =
     userData?.basket &&
     userData.basket.charAt(0).toUpperCase() +
       userData.basket.slice(1).toLowerCase();
 
-  // Define which items should have the "bg-primary" class based on basketType
   const itemsWithBgPrimary =
     basketType === "Premium"
-      ? recyclableItems
-      : ["Plastics", "Nylons", "Bottles"];
+      ? Object.values(Category) // Use enum values directly
+      : [Category.PLASTIC, Category.NYLON, Category.PAPER];
 
   let basketImageSrc;
   switch (basketType) {
@@ -31,6 +51,25 @@ const AddRecycablesClient = () => {
       basketImageSrc = "path_to_default_basket_image.svg";
   }
 
+  const options = itemsWithBgPrimary.map((item) => ({
+    value: item,
+    label: item,
+  }));
+
+  const handleSelectItem = (selectedItem: string) => {
+    if (Object.values(Category).includes(selectedItem as Category)) {
+      setSelectedCategory(selectedItem as Category);
+    }
+  };
+
+  const handleSelectDuration = (selectedDuration: string) => {
+    if (Object.values(Duration).includes(selectedDuration as Duration)) {
+      setSelectedDuration(selectedDuration as Duration);
+    }
+  };
+
+  const existingItems = recyclables?.data?.map((item) => item?.item) || [];
+
   return (
     <div className="p-1.5 mini-md:p-6 max-w-screen-lg mx-auto gap-4 mini-md:gap-6">
       <p className="capitalize text-lg">{basketType} basket</p>
@@ -42,22 +81,83 @@ const AddRecycablesClient = () => {
         </div>
       </div>
 
-      <div className="mt-6">
-        <p>Category</p>
-        <div className="flex gap-x-0.5 gap-y-1 mt-2 lg:w-1/2  flex-wrap">
-          {recyclableItems.map((item) => (
-            <Button
-              key={item}
-              className={`w-fit h-8 rounded-full ${
-                itemsWithBgPrimary.includes(item)
-                  ? "bg-primary"
-                  : "bg-[#d6e1cf] hover:bg-[#d6e1cf]"
-              }`}
-            >
-              {item}
-            </Button>
-          ))}
+      <div className="mt-6 flex flex-col lg:flex-row justify-between">
+        <div className="flex-1">
+          <p>Category</p>
+          <div className="flex gap-x-0.5 gap-y-1 mt-2 lg:w-1/2 flex-wrap">
+            {Object.values(Category).map((item) => (
+              <CustomSheet
+                key={item}
+                title="Recycables"
+                triggerComponent={
+                  <Button
+                    className={`w-fit h-8 rounded-full ${
+                      itemsWithBgPrimary.includes(item)
+                        ? "bg-primary"
+                        : "bg-[#d6e1cf] hover:bg-[#d6e1cf]"
+                    }`}
+                    disabled={existingItems.includes(item)} // Disable if already in recyclables
+                    onClick={() => {
+                      handleSelectItem(item);
+                      navigate(
+                        Green_Bounty_Routes.addRecycablesTab("addRecycables")
+                      );
+                    }}
+                  >
+                    {item}
+                  </Button>
+                }
+              >
+                <RecycablesDrawer selectedItem={selectedCategory} />
+              </CustomSheet>
+            ))}
+          </div>
         </div>
+
+        <CustomSheet
+          title="Recycables"
+          triggerComponent={
+            <Button
+              className="self-end lg:self-start"
+              onClick={() =>
+                navigate(Green_Bounty_Routes.addRecycablesTab("viewRecycables"))
+              }
+            >
+              View Recycables
+            </Button>
+          }
+        >
+          <RecycablesDrawer selectedItem={selectedCategory} />
+        </CustomSheet>
+      </div>
+
+      <div className="mt-6 flex flex-col lg:flex-row justify-between items-start lg:items-center">
+        <p>Category</p>
+        <div className="flex items-center gap-4">
+          <DropDown
+            options={options}
+            label="Category"
+            onSelect={handleSelectItem}
+            className="mt-4 w-[180px]"
+          />
+          <DropDown
+            options={[
+              { value: "Day", label: "Day" },
+              { value: "Month", label: "Month" },
+              { value: "Year", label: "Year" },
+            ]}
+            label="Duration"
+            onSelect={handleSelectDuration}
+            className="mt-4 w-[180px]"
+          />
+        </div>
+      </div>
+
+      <div className="w-full h-86">
+        <AddRecycablesApexLineChart
+          category={selectedCategory}
+          duration={selectedDuration}
+        />
       </div>
     </div>
   );

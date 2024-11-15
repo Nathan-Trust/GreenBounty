@@ -8,6 +8,7 @@ import CustomDialog from "@/components/shared/CustomDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useStore } from "@/store/user";
 import { useAccountStore } from "@/store/wallet";
 import {
   ChartNoAxesColumnIncreasing,
@@ -44,6 +45,7 @@ const dataByRange: DataByRange = {
 };
 
 const RewardsClient = () => {
+  const {userData}= useStore()
   const [dialogOpen, setDialogOpen] = useState({
     transfer: false,
     withdraw: false,
@@ -118,7 +120,7 @@ const RewardsClient = () => {
           </div>
           <div>
             <p className="">Eco-coin balance</p>
-            <p className="text-xl font-medium">$178,000</p>
+            <p className="text-xl font-medium">{userData?.wallet ?? 0}</p>
           </div>
         </CardContent>
       </Card>
