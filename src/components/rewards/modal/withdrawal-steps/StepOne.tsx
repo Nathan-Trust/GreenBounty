@@ -6,6 +6,8 @@ import { truncateText } from "@/utils/text";
 import { useEffect } from "react";
 import { WithdrawalWalletSkeleton } from "./WithdrawalWalletSkeleton";
 import WithdrawalWalletEmptyState from "./WithdrawalWalletEmptyState";
+import { useStore } from "@/store/user";
+import { convertCoinsToNGNCurrency } from "@/utils/currency";
 
 interface StepOneProps {
   onSelectCard: (cardId: string) => void;
@@ -14,6 +16,7 @@ interface StepOneProps {
 
 const StepOne: React.FC<StepOneProps> = ({ onSelectCard, selectedAccount }) => {
   const { loading, fetchAccounts, accounts } = useAccountStore();
+  const {userData}= useStore()
 
   useEffect(() => {
     fetchAccounts();
@@ -22,7 +25,9 @@ const StepOne: React.FC<StepOneProps> = ({ onSelectCard, selectedAccount }) => {
   return (
     <div>
       <p>Available Balance</p>
-      <p className="text-primary font-semibold text-2xl">$218,530</p>
+      <p className="text-primary font-semibold text-2xl">
+        {convertCoinsToNGNCurrency(userData?.wallet ?? 0)}
+      </p>
 
       <p className="mt-4">Select Card</p>
       <div className="flex-1 mt-6 ">

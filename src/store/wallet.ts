@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { User } from "@/services/user";
 import { WithdrawalService } from "@/services/wallet";
-import { AddWithdrawalAccountFormSchemaType } from "@/schema/wallet";
+import { AddWithdrawalAccountFormSchemaType, WithdrawFormSchemaType } from "@/schema/wallet";
 import { AxiosError } from "axios";
 
 export interface Category {
@@ -80,11 +80,45 @@ export interface Accounts {
   meta: Meta;
 }
 
+type WithdrawalData = {
+  data: {
+    createdAt: string; // ISO date string
+  description: string;
+  metadata: {
+    withdrawalAccount: {
+      accountName: string;
+      accountNumber: string;
+      bankName: string;
+    };
+    createdAt: string; // ISO date string
+    isDeleted: boolean;
+    updatedAt: string; // ISO date string
+    user: string; // user ID (string)
+    __v: number;
+    _id: string; // withdrawal ID (string)
+  };
+  paymentMethod: string;
+  reference: string;
+  settlement: number;
+  status: string;
+  totalAmount: number;
+  type: string;
+  updatedAt: string; // ISO date string
+  user: string; // user ID (string)
+  __v: number;
+  _id: string; // transaction ID (string)
+ }
+  message: string | null;
+  success: boolean;
+};
+
+
 export type AccountState = {
   accounts: Accounts | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   loading: boolean;
+  withdrawalResponse: WithdrawalData | null;
 };
 
 interface UpdateWithdrawalAccountBody {
@@ -102,6 +136,7 @@ export type AccountActions = {
     body: UpdateWithdrawalAccount
   ) => Promise<void>;
   handleDeleteWithdrawalAccount: (id: string) => Promise<void>;
+  handleWithdrawal: (body: WithdrawFormSchemaType) => Promise<void>;
 };
 
 export type AccountStore = AccountState & AccountActions;
@@ -112,6 +147,7 @@ export const useAccountStore = create<AccountStore>((set) => ({
   status: "idle",
   error: null,
   loading: false,
+  withdrawalResponse: null,
   /**
    * Fetches the list of withdrawal accounts linked to the merchant.
    *
@@ -173,7 +209,11 @@ export const useAccountStore = create<AccountStore>((set) => ({
       set({ loading: false, status: "succeeded" });
       return response;
     } catch (error) {
-      set({ loading: false, status: "failed", error: (error as AxiosError).message });
+      set({
+        loading: false,
+        status: "failed",
+        error: (error as AxiosError).message,
+      });
       throw error;
     }
   },
@@ -193,7 +233,38 @@ export const useAccountStore = create<AccountStore>((set) => ({
       set({ loading: false, status: "succeeded" });
       return response;
     } catch (error) {
-      set({ loading: false, status: "failed", error: (error as AxiosError).message });
+      set({
+        loading: false,
+        status: "failed",
+        error: (error as AxiosError).message,
+      });
+      throw error;
+    }
+  },
+  /**
+   * Handles the withdrawal process for a specified account.
+   *
+   * @param body - The body of the request. It must contain the account ID, amount, and description.
+   *
+   * @returns A promise that resolves to the data of the withdrawal response.
+   * @throws Will throw an error if the request fails.
+   */
+  handleWithdrawal: async (body) => {
+    set({ loading: true, status: "loading", error: null });
+    try {
+      const response = await WithdrawalService.withdraw(body);
+      set({
+        loading: false,
+        status: "succeeded",
+        withdrawalResponse: response, // Store the response in the state
+      });
+      return response;
+    } catch (error) {
+      set({
+        loading: false,
+        status: "failed",
+        error: (error as AxiosError)?.message,
+      });
       throw error;
     }
   },

@@ -65,7 +65,8 @@ const Navbar = () => {
             : "absolute top-2 md:top-4 w-full bg-transparent z-50 p-4"
         } transition-all duration-300 ease-in-out`}
       >
-        <div className="flex justify-between screen-max-width mx-auto items-center">
+        
+        <div  className="flex justify-between screen-max-width mx-auto items-center">
           {/* Logo */}
           <div
             onClick={() => navigate(Green_Bounty_Routes.home)}

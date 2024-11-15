@@ -10,9 +10,9 @@ const LandingPageLayout = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return (
-    <div className=" min-h-screen font-Poppins ">
+    <div className=" min-h-screen font-Poppins " >
       <Navbar />
-      <div className="w-full h-fit ">
+      <div className="w-full h-fit " >
         <div className=" mt-28  z-20">
           <Outlet />
         </div>

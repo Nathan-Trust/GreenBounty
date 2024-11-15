@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { WithdrawFormSchemaType } from "@/schema/wallet";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react"; // Assuming you're using this icon component
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 
 interface StepTwoFormProps {
@@ -19,10 +19,19 @@ interface StepTwoFormProps {
 
 const StepTwo = ({ form }: StepTwoFormProps) => {
   const [showDetails, setShowDetails] = useState(false);
+  const [totalAmount, setTotalAmount] = useState(0); // Track the total amount
 
   const handleToggle = () => {
     setShowDetails(!showDetails);
   };
+
+  // Recalculate total when the amount changes
+  useEffect(() => {
+    const amount = form.getValues("amount");
+    if (amount) {
+      setTotalAmount(amount * 10); // 1 coin = 10 Naira
+    }
+  }, [form.watch("amount")]);
 
   return (
     <div className="pb-8 border-b space-y-3">
@@ -74,7 +83,13 @@ const StepTwo = ({ form }: StepTwoFormProps) => {
             <FormItem>
               <FormLabel>Amount</FormLabel>
               <FormControl>
-                <Input type="number" min={0} placeholder="12" {...field} />
+                <Input
+                  type="number"
+                  min={0}
+                  placeholder="12"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -99,15 +114,11 @@ const StepTwo = ({ form }: StepTwoFormProps) => {
           )}
         />
       </div>
+
+      {/* Displaying the Total Amount */}
       <div className="bg-[#0047F112] flex justify-between text-sm p-3 mt-2 rounded-md">
         <p>Total</p>
-        <p>balablu</p>
-      </div>
-      <div>
-        <p className="text-[#646464] text-sm">Distribution Information</p>
-        <div className="bg-[#0047F112] flex justify-between text-sm p-3 mt-2 rounded-md">
-          <p>Your customers bear the cost of delivery riders</p>
-        </div>
+        <p>{totalAmount} Naira</p>
       </div>
     </div>
   );

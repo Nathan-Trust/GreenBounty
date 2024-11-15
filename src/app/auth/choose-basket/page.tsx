@@ -158,7 +158,8 @@ const ChooseBasketForm = () => {
                       isChecked
                         ? "text-primary border-primary"
                         : "text-black border-black"
-                    } border-2 flex items-center p-4 rounded-lg`}
+                      } border-2 flex
+                     items-center p-4 rounded-lg`}
                     key={basket.name}
                     onClick={() => setSelected(basket.name)}
                   >
@@ -176,7 +177,7 @@ const ChooseBasketForm = () => {
               })}
               <Button
                 disabled={!selected || loading}
-                onClick={() => onSubmit(selected!)} // Call the onSubmit function when a basket is selected
+                onClick={() => onSubmit(selected!)} 
                 className="w-full"
               >
                 {loading ? <LoadingDots /> : "Continue"}

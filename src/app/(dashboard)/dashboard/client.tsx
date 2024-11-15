@@ -7,6 +7,7 @@ import { useStore } from "@/store/user";
 import { truncateText } from "@/utils/text";
 import { Badge } from "@/components/ui/badge";
 import Pickup from "@/components/myprofile/pickup";
+import { convertCoinsToNGNCurrency } from "@/utils/currency";
 
 const DashboardClient = () => {
   const { userData } = useStore();
@@ -35,7 +36,11 @@ const DashboardClient = () => {
               </button>
             </div>
             <p className="mt-4 text-2xl ">
-              {showBalance ? `$${userData?.wallet}` : "***********"}
+              {showBalance
+                ? userData?.wallet
+                  ? convertCoinsToNGNCurrency(userData?.wallet)
+                  : "Invalid wallet balance"
+                : "***********"}
             </p>
             <div className="flex justify-between items-center">
               <p>{truncateText(userData?.name?.toUpperCase() ?? "", 20)}</p>

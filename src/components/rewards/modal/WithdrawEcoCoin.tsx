@@ -10,16 +10,20 @@ import StepThree from "./withdrawal-steps/StepThree";
 import useMultiForm from "@/hooks/useMultiForm";
 import { WithdrawFormSchema } from "@/schema/wallet";
 import { logger } from "@/utils/logger";
+import { useAccountStore } from "@/store/wallet";
+import { errorToast, successToast } from "@/utils/toast";
+import { ApiError } from "@/models/serviceRequest";
 
 const WithdrawEcoCoin: React.FC = () => {
-  const loading = false;
+    const [loading, setLoading] = useState(false);
+  const { handleWithdrawal}= useAccountStore();
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof WithdrawFormSchema>>({
     resolver: zodResolver(WithdrawFormSchema),
     defaultValues: {
-      card: selectedCard ?? "",
-      amount: "",
+      account: selectedCard ?? "",
+      amount: 0,
       description: "",
     },
     mode: "onChange",
@@ -55,13 +59,27 @@ const WithdrawEcoCoin: React.FC = () => {
   };
 
   const onSubmit = async (data: z.infer<typeof WithdrawFormSchema>) => {
-    logger("Form submitted:", data);
+      setLoading(true);
+    try {
+      await handleWithdrawal(data);
+      logger("Form submitted:", data);
+      successToast({
+        title: "Withdrawal Successful",
+        message: "Your rewards have been withdrawn successfully.",
+      })
+      next();
+    } catch (error) {
+      setLoading(false);
+      errorToast({
+        title: "Withdrawal Failed",
+        message: (error as ApiError)?.response?.data?.message ?? "Failed to withdraw your rewards. Please try again later.",
+      })
+    }
     // Implement form submission logic
   };
-
   useEffect(() => {
     if (selectedCard) {
-      form.setValue("card", selectedCard);
+      form.setValue("account", selectedCard);
     }
   }, [selectedCard, form]);
 

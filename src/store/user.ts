@@ -21,7 +21,7 @@ const newDate = new Date(currentDate);
 newDate.setHours(currentDate.getHours() + 24);
 
 // Function to save data in cookies
-const saveToCookies = (key: string, data: any): void => {
+export const saveToCookies = (key: string, data: any): void => {
   Cookies.set(key, encrypt(JSON.stringify(data)), {
     httpOnly: false,
     expires: newDate,
@@ -32,7 +32,7 @@ const saveToCookies = (key: string, data: any): void => {
 };
 
 // Function to get data from cookies
-const getFromCookies = (key: string): any | null => {
+export const getFromCookies = (key: string): any | null => {
   const cookieData = decrypt(Cookies.get(key));
   if (cookieData) {
     if (typeof cookieData === "string") {

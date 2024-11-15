@@ -60,7 +60,7 @@ const Layout = () => {
       });
     };
 
-    const intervalId = setInterval(fetchData, 10000);
+    const intervalId = setInterval(fetchData, 1000);
 
     return () => clearInterval(intervalId);
   }, [queryClient]);
@@ -115,7 +115,16 @@ const Layout = () => {
                         delay: 0.5, // Delay button animation
                       }}
                     >
-                      <Button className="mt-4">Upgrade to Premium Plan</Button>
+                      <Button
+                        className="mt-4"
+                        onClick={() =>
+                          navigate(Green_Bounty_Routes.chooseBasket, {
+                            state: { fromSignIn: true },
+                          })
+                        }
+                      >
+                        Upgrade to Premium Plan
+                      </Button>
                     </motion.div>
                   </motion.div>
                 </div>

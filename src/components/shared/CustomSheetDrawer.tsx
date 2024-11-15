@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import {
   Sheet,
   SheetTrigger,
@@ -14,8 +14,8 @@ interface CustomSheetProps {
   description?: string;
   children: ReactNode;
   className?: string;
-  active: boolean;
-  setActive: (newState: boolean) => void;
+  active?: boolean;
+  setActive?: (newState: boolean) => void;
 }
 
 const CustomSheet: React.FC<CustomSheetProps> = ({
@@ -27,17 +27,34 @@ const CustomSheet: React.FC<CustomSheetProps> = ({
   active = false,
   setActive,
 }) => {
+  // If `setActive` is not passed, use local state
+  const [localActive, setLocalActive] = useState(active);
+
+  // Use the passed `setActive` if available, otherwise use the local state
+  const handleOpenChange = (newState: boolean) => {
+    if (setActive) {
+      setActive(newState);
+    } else {
+      setLocalActive(newState);
+    }
+  };
+
   return (
-    <Sheet open={active} onOpenChange={setActive}>
+    <Sheet
+      open={setActive !== undefined ? active : localActive}
+      onOpenChange={handleOpenChange}
+    >
       <SheetTrigger asChild>
         {typeof triggerComponent === "string" ? (
-          <button onClick={() => setActive(!active)}>{triggerComponent}</button>
+          <button onClick={() => handleOpenChange(!active)}>
+            {triggerComponent}
+          </button>
         ) : (
           triggerComponent
         )}
       </SheetTrigger>
       <SheetContent
-        className={`pt-[120px] px-2 md:px-5 min-w-[350px]  bg-[#FCFCFC] ${className}`}
+        className={` px-2 md:px-5 min-w-[350px]  bg-[#FCFCFC] ${className}`}
       >
         <SheetHeader>
           {title && <SheetTitle>{title}</SheetTitle>}
