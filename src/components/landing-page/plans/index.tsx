@@ -7,14 +7,12 @@ const Plans = () => {
       </div>
       <div className="mt-6 flex flex-wrap justify-center gap-8">
         {/* Standard Basket */}
-        <div className="flex flex-col h-auto w-[280px] p-6 rounded-lg border duration-300 ease-in-out">
-          <p className="text-xl font-semibold text-center text-primary">
+        <div className="flex flex-col h-auto w-[280px] bg-primary text-white p-6 rounded-lg border duration-300 ease-in-out">
+          <p className="text-xl font-semibold text-center text-white">
             Standard Basket
           </p>
-          <p className="font-medium text-center text-4xl mt-16 text-green-600">
-            $0
-          </p>
-          <ul className="mt-16 space-y-4 text-sm text-gray-700 flex-grow">
+          <p className="font-medium text-center text-4xl mt-16">$0</p>
+          <ul className="mt-16 space-y-4 text-smflex-grow">
             <li>Plastics, Nylons and Papers</li>
             <li>Earn Ecocoins for each bounty</li>
             <li>Weekly Pickups</li>
@@ -22,14 +20,14 @@ const Plans = () => {
         </div>
 
         {/* Premium Basket */}
-        <div className="flex flex-col h-auto w-[280px] p-6 rounded-lg border duration-300 ease-in-out">
-          <p className="text-xl font-semibold text-center text-primary">
+        <div className="flex flex-col h-auto w-[280px]  bg-primary text-white p-6 rounded-lg border duration-300 ease-in-out">
+          <p className="text-xl font-semibold text-center">
             Premium Basket
           </p>
-          <p className="font-medium text-center text-4xl mt-16 text-green-600">
+          <p className="font-medium text-center text-4xl mt-16 ">
             $20
           </p>
-          <ul className="mt-16 space-y-4 text-sm text-gray-700 flex-grow">
+          <ul className="mt-16 space-y-4 text-smflex-grow">
             <li>Materials like metals, Irons</li>
             <li>Earn Double Eco-coins</li>
             <li>Pickups upon request</li>

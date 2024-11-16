@@ -3,6 +3,10 @@ import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts"; // Import ApexOptions type
 import { useMemo } from "react";
 import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
+import { Green_Bounty_Routes } from "@/store/route";
+import CustomDialog from "../shared/CustomDialog";
+import SchedulePickup from "../myprofile/pickup/modal/SchedulePickup";
 
 type BasketFillLoaderCardProps = {
   dataValue: number; // Define type for the dataValue prop
@@ -13,7 +17,7 @@ const BasketFillLoaderCard: React.FC<BasketFillLoaderCardProps> = ({
 }) => {
   // Define labels
   const labels = ["0-30", "30-50", "50-80", "80-100"];
-
+const navigate = useNavigate()
   // Determine the segments based on the dataValue
   const getSeriesData = (value: number): number[] => {
     if (value <= 30) return [value, 100 - value]; // 0-30
@@ -125,9 +129,27 @@ const BasketFillLoaderCard: React.FC<BasketFillLoaderCardProps> = ({
             </Button> */}
           </div>
         </div>
-        <Button className="text-[#548235] self-end bg-white  w-fit mb-3 hover:bg-white">
-          Add Recycables
-        </Button>
+        {dataValue === 100 ? (
+          <CustomDialog
+            triggerComponent={
+              <Button
+                disabled={dataValue !== 100}
+                className="text-white bg-red-600 self-end w-fit mb-3 hover:bg-red-700"
+              >
+                Notify Admin
+              </Button>
+            }
+          >
+            <SchedulePickup />
+          </CustomDialog>
+        ) : (
+          <Button
+            onClick={() => navigate(Green_Bounty_Routes.addRecycables)}
+            className="text-[#548235] bg-white self-end w-fit mb-3 hover:bg-white"
+          >
+            Add Recyclables
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

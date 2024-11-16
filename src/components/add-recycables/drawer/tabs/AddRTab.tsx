@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Category } from "../../RecycablesLineChart";
+import { useBasketStore } from "@/store/basket";
 
 type AddRTabProps = {
   availableItems: Category[];
@@ -33,6 +34,7 @@ type AddRTabProps = {
 const AddRTab = ({ availableItems, selectedItem }: AddRTabProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { fetchRecyclables, createRecyclable } = useRecyclablesStore();
+    const { fetchBasketDetails } = useBasketStore();
   const form = useForm<z.infer<typeof AddRecycablesSchema>>({
     resolver: zodResolver(AddRecycablesSchema),
     defaultValues: {
@@ -49,6 +51,7 @@ const AddRTab = ({ availableItems, selectedItem }: AddRTabProps) => {
         message: "Success",
       });
       fetchRecyclables();
+      fetchBasketDetails()
     } catch (error) {
       errorToast({
         title: "Failed to create recycable",

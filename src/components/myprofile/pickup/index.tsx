@@ -6,17 +6,23 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import CustomDialog from "@/components/shared/CustomDialog";
 import SchedulePickup from "./modal/SchedulePickup";
+import { getDataValue } from "@/utils/data-value";
 
-const Pickup = ({className}: {className?:string}) => {
+const Pickup = ({ className }: { className?: string }) => {
+  const dataValue = getDataValue();
+
   const loading = false;
   return (
     <div className={cn("mt-24", className)}>
       <div className="flex items-center justify-between">
         <p>Pickup History</p>
         <CustomDialog
-          triggerComponent={<Button>Schedule Pickup</Button>}
+          triggerComponent={
+            <Button disabled={dataValue !== 100}>Schedule Pickup</Button>
+          }
+          disabled={dataValue !== 100}
         >
-          <SchedulePickup/>
+          <SchedulePickup />
         </CustomDialog>
       </div>
       <FetchLoadingAndEmptyState
