@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Eye, EyeOff, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import BasketFillLoaderCard from "@/components/dashboard/BasketFillLoaderCard";
@@ -8,10 +8,36 @@ import { truncateText } from "@/utils/text";
 import { Badge } from "@/components/ui/badge";
 import Pickup from "@/components/myprofile/pickup";
 import { convertCoinsToNGNCurrency } from "@/utils/currency";
+import { useBasketStore } from "@/store/basket";
+import { MAX_WEIGHT } from "@/config";
+import { errorToast } from "@/utils/toast";
+import { ApiError } from "@/models/serviceRequest";
 
 const DashboardClient = () => {
   const { userData } = useStore();
+  const [dataValue, setDataValue] = useState(0); // State for chart percentage
   const [showBalance, setShowBalance] = useState(false);
+  const { fetchBasketDetails, basketDetails } = useBasketStore();
+
+  useEffect(() => {
+    const getBasketData = async () => {
+      try {
+        await fetchBasketDetails();
+        if (basketDetails) {
+          const percentage =
+            (basketDetails?.data?.itemsWeight / MAX_WEIGHT) * 100;
+          setDataValue(Math.min(percentage, 100)); // Cap value at 100%
+        }
+      } catch (error) {
+        errorToast({
+          title: "Failed to fetch basket data",
+          message:  (error as ApiError)?.response?.data?.error ?? "Please try again later.",
+        });
+      }
+    };
+
+    getBasketData();
+  }, [fetchBasketDetails]);
 
   const toggleBalanceVisibility = () => {
     setShowBalance((prevState) => !prevState);
@@ -107,7 +133,7 @@ const DashboardClient = () => {
           </CardContent>
         </Card>
 
-        <BasketFillLoaderCard dataValue={75} />
+        <BasketFillLoaderCard dataValue={dataValue} />
         <Card className="col-span-11 md:col-span-4 md:order-5 h-fit lg:order-4 bg-[#9C8B2E]">
           <CardContent className="flex gap-4 items-start text-white p-4">
             <div className="text-[#9C8B2E] bg-white w-12 h-12 flex items-center rounded-md justify-center">

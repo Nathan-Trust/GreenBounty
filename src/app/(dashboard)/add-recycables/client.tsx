@@ -2,6 +2,7 @@ import { useStore } from "@/store/user";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import premiumBasket from "../../../assets/baskets/premiumBasketSvg.svg";
+import standardBasket from "../../../assets/baskets/standard basket svg.svg"
 import AddRecycablesApexLineChart, {
   Category,
   Duration,
@@ -45,10 +46,10 @@ const AddRecycablesClient = () => {
       basketImageSrc = premiumBasket;
       break;
     case "Standard":
-      basketImageSrc = "path_to_standard_basket_image.svg";
+      basketImageSrc = standardBasket;
       break;
     default:
-      basketImageSrc = "path_to_default_basket_image.svg";
+      basketImageSrc = standardBasket;
   }
 
   const options = itemsWithBgPrimary.map((item) => ({
