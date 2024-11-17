@@ -93,7 +93,7 @@ const AddWithdrawalAccount = ({
                 <FormControl>
                   <Input
                     type="number"
-                    placeholder="Input amount here"
+                    placeholder="Input account number here"
                     {...field}
                   />
                 </FormControl>
@@ -118,8 +118,8 @@ const AddWithdrawalAccount = ({
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="keystone">Keystone bank</SelectItem>
-                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                    <SelectItem value="first bank">First bank</SelectItem>
+                    <SelectItem value="zenith bank">Zenith bank</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
