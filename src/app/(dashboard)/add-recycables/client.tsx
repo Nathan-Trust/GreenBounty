@@ -134,7 +134,7 @@ const AddRecycablesClient = () => {
 
       <div className="mt-6 flex flex-col lg:flex-row justify-between items-start lg:items-center">
         <p>Category</p>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
           <DropDown
             options={options}
             label="Category"
