@@ -131,7 +131,7 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            <Button>Start Recycling</Button>
+            <Button onClick={() => navigate(Green_Bounty_Routes.signUp)}>Start Recycling</Button>
           </div>
         </div>
       </nav>
