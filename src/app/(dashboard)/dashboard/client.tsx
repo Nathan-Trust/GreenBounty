@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Eye, EyeOff, TrendingUp } from "lucide-react";
+import { Eye, EyeOff, TrendingUp, Truck } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import BasketFillLoaderCard from "@/components/dashboard/BasketFillLoaderCard";
-import { Truck } from "lucide-react";
 import { useStore } from "@/store/user";
 import { truncateText } from "@/utils/text";
 import { Badge } from "@/components/ui/badge";
@@ -42,8 +41,6 @@ const DashboardClient = () => {
   const toggleBalanceVisibility = () => {
     setShowBalance((prevState) => !prevState);
   };
-
-  console.log("datavalue ==>", dataValue)
 
   return (
     <>

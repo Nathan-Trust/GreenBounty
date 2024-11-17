@@ -68,18 +68,18 @@ const ChooseBasketForm = () => {
     transactionDetails,
     loading,
   } = useBasketStore();
-  const fromSignIn = location.state?.fromSignIn;
-
-  useEffect(() => {
-    if (!fromSignIn) {
-      navigate(Green_Bounty_Routes.signIn, { replace: true });
-    }
-  }, [fromSignIn, navigate]);
-
   // Extract trxref and reference from search params
   const searchParams = new URLSearchParams(location.search);
   const trxref = searchParams.get("trxref");
   const reference = searchParams.get("reference");
+
+useEffect(() => {
+  if (!trxref && !reference) {
+    navigate(Green_Bounty_Routes.signIn, { replace: true });
+  }
+}, [trxref, reference, navigate]);
+
+
 
   // Fetch transaction details when trxref or reference changes
   useEffect(() => {

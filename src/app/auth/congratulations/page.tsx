@@ -66,13 +66,11 @@ const CongratulationsPage = () => {
       <CardContent>
         <Button
           onClick={() =>
-            navigate(Green_Bounty_Routes.chooseBasket, {
-              state: { fromSignIn: true },
-            })
+            navigate(Green_Bounty_Routes.signIn)
           }
           className="w-full"
         >
-          Proceed to Choose Basket{" "}
+          Proceed to Sign in{" "}
         </Button>
       </CardContent>
     </Card>
