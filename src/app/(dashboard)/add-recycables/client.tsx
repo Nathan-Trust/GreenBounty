@@ -82,7 +82,7 @@ const AddRecycablesClient = () => {
         </div>
       </div>
 
-      <div className="mt-6 flex flex-col lg:flex-row justify-between">
+      <div className="mt-6 flex flex-col gap-2 lg:flex-row justify-between">
         <div className="flex-1">
           <p>Category</p>
           <div className="flex gap-x-0.5 gap-y-1 mt-2 lg:w-1/2 flex-wrap">
