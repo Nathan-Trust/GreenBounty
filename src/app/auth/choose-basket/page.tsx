@@ -75,10 +75,15 @@ const ChooseBasketForm = () => {
   const reference = searchParams.get("reference");
 
 useEffect(() => {
+  if (fromSignIn === undefined || trxref === null || reference === null) {
+    return;
+  }
+
   if (!fromSignIn || (!trxref && !reference)) {
     navigate(Green_Bounty_Routes.signIn, { replace: true });
   }
-}, [trxref, reference, navigate]);
+}, [fromSignIn, trxref, reference, navigate]);
+
 
 
   // Fetch transaction details when trxref or reference changes
