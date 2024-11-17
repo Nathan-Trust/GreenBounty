@@ -43,6 +43,8 @@ const DashboardClient = () => {
     setShowBalance((prevState) => !prevState);
   };
 
+  console.log("datavalue ==>", dataValue)
+
   return (
     <>
       <div className="grid grid-cols-11 p-1.5 mini-md:p-6  max-w-screen-lg mx-auto gap-4 mini-md:gap-3 ">
@@ -133,7 +135,7 @@ const DashboardClient = () => {
           </CardContent>
         </Card>
 
-        <BasketFillLoaderCard dataValue={dataValue} />
+        <BasketFillLoaderCard dataValue={!Number.isNaN(dataValue) ? dataValue : 0} />
         <Card className="col-span-11 md:col-span-4 md:order-5 h-fit lg:order-4 bg-[#9C8B2E]">
           <CardContent className="flex gap-4 items-start text-white p-4">
             <div className="text-[#9C8B2E] bg-white w-12 h-12 flex items-center rounded-md justify-center">
