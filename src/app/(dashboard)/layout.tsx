@@ -60,10 +60,10 @@ const Layout = () => {
       });
     };
 
-    const intervalId = setInterval(fetchData, 1000);
+    const intervalId = setInterval(fetchData,5000);
 
     return () => clearInterval(intervalId);
-  }, [queryClient]);
+  });
 
   return (
     <div className="overflow-hidden flex h-screen font-poppins">

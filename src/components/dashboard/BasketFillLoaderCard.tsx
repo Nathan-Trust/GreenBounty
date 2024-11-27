@@ -1,7 +1,7 @@
 import { Card, CardContent } from "../ui/card";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts"; // Import ApexOptions type
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import { Green_Bounty_Routes } from "@/store/route";
@@ -15,6 +15,7 @@ type BasketFillLoaderCardProps = {
 const BasketFillLoaderCard: React.FC<BasketFillLoaderCardProps> = ({
   dataValue,
 }) => {
+  const [open, setOpen]= useState(false)
   // Define labels
   const labels = ["0-30", "30-50", "50-80", "80-100"];
 const navigate = useNavigate()
@@ -131,6 +132,8 @@ const navigate = useNavigate()
         </div>
         {dataValue === 100 ? (
           <CustomDialog
+            open={open}
+            onOpenChange={() => setOpen(!open)}
             triggerComponent={
               <Button
                 disabled={dataValue !== 100}
@@ -140,7 +143,7 @@ const navigate = useNavigate()
               </Button>
             }
           >
-            <SchedulePickup />
+            <SchedulePickup setOpen={setOpen} />
           </CustomDialog>
         ) : (
           <Button

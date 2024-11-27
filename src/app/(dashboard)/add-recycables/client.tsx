@@ -139,7 +139,7 @@ const AddRecycablesClient = () => {
             options={options}
             label="Category"
             onSelect={handleSelectItem}
-            className="mt-4 w-[180px]"
+            className="mt-4 w-full sm:w-[180px]"
           />
           <DropDown
             options={[
@@ -149,7 +149,7 @@ const AddRecycablesClient = () => {
             ]}
             label="Duration"
             onSelect={handleSelectDuration}
-            className="mt-4 w-[180px]"
+            className="mt-4 w-full sm:w-[180px]"
           />
         </div>
       </div>
