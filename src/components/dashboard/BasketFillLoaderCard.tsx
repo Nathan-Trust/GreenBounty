@@ -125,9 +125,6 @@ const navigate = useNavigate()
                 <span>80%-100%</span>
               </div>
             </div>
-            {/* <Button className="text-[#548235] hidden lg:block mt-6 bg-white w-fit mb-3 hover:bg-white">
-              Add Recycables
-            </Button> */}
           </div>
         </div>
         {dataValue === 100 ? (
