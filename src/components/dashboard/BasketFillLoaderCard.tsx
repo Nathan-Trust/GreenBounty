@@ -134,6 +134,7 @@ const navigate = useNavigate()
           <CustomDialog
             open={open}
             onOpenChange={() => setOpen(!open)}
+            className="self-end"
             triggerComponent={
               <Button
                 disabled={dataValue !== 100}
