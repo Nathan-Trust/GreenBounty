@@ -32,27 +32,53 @@ import { CalendarIcon, X } from "lucide-react";
 import { PickupFormSchema } from "@/schema/pickup";
 import { useEffect, useState } from "react";
 import { useStore } from "@/store/user";
-import { logger } from "@/utils/logger";
+import { usePickupStore } from "@/store/pickup";
+import { errorToast, successToast } from "@/utils/toast";
+import { ApiError } from "@/models/serviceRequest";
+import LoadingDots from "@/components/shared/LoadingDots";
 
-const SchedulePickup = () => {
+
+type SchedulePickupProps = {
+  setOpen: (open: boolean) => void;
+}
+
+const SchedulePickup = ({ setOpen }: SchedulePickupProps) => {
   const { userData } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
+  const { schedulePickup, fetchPickupHistory } = usePickupStore();
   const form = useForm<z.infer<typeof PickupFormSchema>>({
     resolver: zodResolver(PickupFormSchema),
     defaultValues: {
       name: "",
-      address: "",
-      preferredDate: new Date(),
+      pickupAddress: "",
+      pickupDate: new Date(),
       weight: "",
-      conditionSelector: "",
+      itemCondition: "",
       wasteType: [],
-      additionalInfo: "",
+      notes: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof PickupFormSchema>) {
-    logger("Pickup Scheduled:", values);
+  async function onSubmit(values: z.infer<typeof PickupFormSchema>) {
+    setIsLoading(true);
+    try {
+      await schedulePickup({ ...values, weight: Number(values.weight) });
+      successToast({
+        title: "Schedule Pickup Successfully",
+        message: "Success",
+      });
+      setOpen(false);
+    await fetchPickupHistory();
+    } catch (error) {
+      errorToast({
+        title: "Failed to schedule pickup",
+        message: (error as ApiError)?.response?.data?.message ?? "",
+      });
+    } finally {
+      setOpen(false);
+      setIsLoading(false);
+    }
   }
 
   const standardWasteOptions = ["Bottle", "Paper", "Nylon"];
@@ -81,8 +107,6 @@ const SchedulePickup = () => {
     form.setValue("wasteType", selectedItems);
     form.clearErrors("wasteType");
   }, [selectedItems, form]);
-
-
 
   return (
     <>
@@ -120,7 +144,7 @@ const SchedulePickup = () => {
           {/* Address */}
           <FormField
             control={form.control}
-            name="address"
+            name="pickupAddress"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Pickup Address</FormLabel>
@@ -138,7 +162,7 @@ const SchedulePickup = () => {
           {/* Preferred Date */}
           <FormField
             control={form.control}
-            name="preferredDate"
+            name="pickupDate"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Preferred Pickup Date</FormLabel>
@@ -200,7 +224,7 @@ const SchedulePickup = () => {
           {/* Condition Selector */}
           <FormField
             control={form.control}
-            name="conditionSelector"
+            name="itemCondition"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Condition of Items</FormLabel>
@@ -215,8 +239,8 @@ const SchedulePickup = () => {
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="clean">Clean</SelectItem>
-                    <SelectItem value="mixed">Mixed</SelectItem>
-                    <SelectItem value="needsSorting">Needs Sorting</SelectItem>
+                    <SelectItem value="Mixed">Mixed</SelectItem>
+                    <SelectItem value="Need_Sorting">Needs Sorting</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>
@@ -276,7 +300,7 @@ const SchedulePickup = () => {
           {/* Additional Info */}
           <FormField
             control={form.control}
-            name="additionalInfo"
+            name="notes"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Additional Information</FormLabel>
@@ -296,8 +320,12 @@ const SchedulePickup = () => {
           />
 
           {/* Submit Button */}
-          <Button type="submit" className="w-full" disabled={!form.formState.isValid}>
-            Schedule Pickup
+          <Button
+            type="submit"
+            disabled={isLoading || !form.formState.isValid}
+            className="w-full flex items-center justify-center"
+          >
+            {isLoading ? <LoadingDots /> : "Schedule Pickup"}
           </Button>
         </form>
       </Form>
