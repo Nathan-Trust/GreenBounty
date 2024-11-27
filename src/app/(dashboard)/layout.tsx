@@ -9,8 +9,7 @@ import { decrypt } from "@/services/encryption";
 import { Button } from "@/components/ui/button";
 import { useStore } from "@/store/user";
 import { motion } from "framer-motion";
-import { useQueryClient } from "@tanstack/react-query";
-import { QueryKeys } from "@/models/query";
+import { UserService } from "@/services/user";
 
 const Layout = () => {
   const { active } = useProviderContext();
@@ -20,7 +19,7 @@ const Layout = () => {
   const token = Cookies.get("token");
   const user = token ? decrypt(token) : null;
   const { userData } = useStore();
-  const queryClient = useQueryClient();
+  const { saveUserData } = useStore();
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -55,15 +54,18 @@ const Layout = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await queryClient.invalidateQueries({
-        queryKey: [QueryKeys.Get_Current_User],
-      });
+        const res = await UserService.getCurrentUser();
+        if (res) {
+          saveUserData(res); // Assuming `res` contains the user data
+        }
     };
 
-    const intervalId = setInterval(fetchData,5000);
+    const intervalId = setInterval(fetchData, 5000); // Fetch data every 5 seconds
 
-    return () => clearInterval(intervalId);
-  });
+    fetchData(); // Immediate call to fetch data on component mount
+
+    return () => clearInterval(intervalId); // Cleanup interval on unmount
+  }, [saveUserData]); // Add `saveUserData` to dependency array
 
   return (
     <div className="overflow-hidden flex h-screen font-poppins">
